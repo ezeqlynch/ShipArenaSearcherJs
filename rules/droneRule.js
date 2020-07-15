@@ -7,7 +7,7 @@ class DroneRule {
     }
 
     clone() {
-        return new ArenaDroneRule(this.drone);
+        return new DroneRule(this.drone);
     }
 
     toString() {

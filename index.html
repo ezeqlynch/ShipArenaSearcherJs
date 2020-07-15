@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<head></head>
+<body>
+    <style>
+        body { background-color: #ceddce;}
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+td {
+    text-align: right;
+}
+
+#leftWings, #middleWings, #rightWings, .thick {
+    border-bottom: 2px solid black;
+}
+
+.special {
+    background-color: #ceddce;
+    border-top: none;
+    border-left: none;
+}
+
+</style>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'input')">Data</button>
+        <button id="resultsButton" class="tablinks" onclick="openTab(event, 'results')">Results</button>
+    </div>
+    <div class="tabcontent" id="results" style="display: none;">
+        <br>
+        <table id="tablita">
+            <tr id="stageTable" style="background-color: #b7b7b7"><td colspan="2" class="special"></td></tr>
+            <tr id="leftWeapon"><th class="thick" rowspan="4" scope="rowgroup" style="background-color: #b4a7d6;">Left Ship</th><th scope="row" style="background-color: #b4a7d6;">Weapon</th></tr>
+            <tr id="leftReactor"><th scope="row" style="background-color: #b4a7d6;">Reactor</th></tr>
+            <tr id="leftHull"><th scope="row" style="background-color: #b4a7d6;">Hull</th></tr>
+            <tr id="leftWings"><th scope="row" style="background-color: #b4a7d6;">Wings</th></tr>
+            <tr id="middleWeapon"><th class="thick" rowspan="4" scope="rowgroup" style="background-color: #d9d2e9;">Middle Ship</th><th scope="row" style="background-color: #d9d2e9;">Weapon</th></tr>
+            <tr id="middleReactor"><th scope="row" style="background-color: #d9d2e9;">Reactor</th></tr>
+            <tr id="middleHull"><th scope="row" style="background-color: #d9d2e9;">Hull</th></tr>
+            <tr id="middleWings"><th scope="row" style="background-color: #d9d2e9;">Wings</th></tr>
+            <tr id="rightWeapon"><th class="thick" rowspan="4" scope="rowgroup" style="background-color: #b4a7d6;">Right Ship</th><th scope="row" style="background-color: #b4a7d6;">Weapon</th></tr>
+            <tr id="rightReactor"><th scope="row" style="background-color: #b4a7d6;">Reactor</th></tr>
+            <tr id="rightHull"><th scope="row" style="background-color: #b4a7d6;">Hull</th></tr>
+            <tr id="rightWings"><th scope="row" style="background-color: #b4a7d6;">Wings</th></tr>
+            <tr id="reflection">
+                <th rowspan="5" scope="rowgroup" style="background-color: #d9d2e9;">Drones</th>
+                <th scope="row" style="background-color: #d9d2e9;">Reflection</th>
+            </tr>
+            <tr id="shieldPen">
+                <th scope="row" style="background-color: #d9d2e9;">Shield Pen</th>
+            </tr>
+            <tr id="deadlyInc">
+                <th scope="row" style="background-color: #d9d2e9;">Deadly Inc</th>
+            </tr>
+            <tr id="regen">
+                <th scope="row" style="background-color: #d9d2e9;">Regen</th>
+            </tr>
+            <tr id="leech">
+                <th scope="row" style="background-color: #d9d2e9;">Leech</th>
+            </tr>
+            <tr id="healthTrophy">
+                <th rowspan="2" scope="rowgroup" style="background-color: #b4a7d6;">Trophies</th>
+                <th scope="row" style="background-color: #b4a7d6;">Health</th>
+            </tr>
+            <tr id="damageTrophy">
+                <th scope="row" style="background-color: #b4a7d6;">Damage</th>
+            </tr>
+
+
+
+
+        </table>
+    </div>
+    <div class="tabcontent" id="input">
+
+    <p>
+        <input id='orbBonus' onkeyup="saveValue(this)"> Orb Bonus (with virtue applied)
+    </p>
+    <p>
+        <input id='saBonus' onkeyup="saveValue(this)"> Space Academy Bonus
+    </p>
+    <p>
+        <input id='guildBonus' onkeyup="saveValue(this)"> Guild Passive Bonus
+    </p>
+    <p>
+        <input id='legBonus' onkeyup="saveValue(this)"> Legendary Dmg
+    </p>
+    <p>
+        <input id='dmAsc' onkeyup="saveValue(this)"> Asc Damage
+    </p>
+    <p>
+        <input id='hpAsc' onkeyup="saveValue(this)"> Asc Health
+    </p>
+    <p>
+        <input id='currUlt' onkeyup="saveValue(this)"> Current Ultinum
+    </p>
+    <p>
+        <input id='currIm' onkeyup="saveValue(this)"> Current Imatter
+    </p>
+    <p>
+        <input id='stage' onkeyup="saveValue(this)"> Baseline Opponent Cleared
+    </p>
+    <p>
+        <input id='totalIm' onkeyup="saveValue(this)"> Total Imatter
+    </p>
+    <p>
+        <input id='totalPCores' onkeyup="saveValue(this)"> Total PCores
+    </p>
+    <p>
+        <input id='totalUlt' onkeyup="saveValue(this)"> Total Ultinum
+    </p>
+    <table>
+        <tr><td></td><th>Left</th><th>Middle</th><th>Right</th></tr>
+        <tr><th scope="row">Weapon</th><td><input id='weL' onkeyup="saveValue(this)"></td><td><input id='weM' onkeyup="saveValue(this)"></td><td><input id='weR' onkeyup="saveValue(this)"></td></tr>
+        <tr><th scope="row">Reactor</th><td><input id='reL' onkeyup="saveValue(this)"></td><td><input id='reM' onkeyup="saveValue(this)"></td><td><input id='reR' onkeyup="saveValue(this)"></td></tr>
+        <tr><th scope="row">Hull</th><td><input id='huL' onkeyup="saveValue(this)"></td><td><input id='huM' onkeyup="saveValue(this)"></td><td><input id='huR' onkeyup="saveValue(this)"></td></tr>
+        <tr><th scope="row">Wings</th><td><input id='wiL' onkeyup="saveValue(this)"></td><td><input id='wiM' onkeyup="saveValue(this)"></td><td><input id='wiR' onkeyup="saveValue(this)"></td></tr>
+    </table>
+    <br>
+    <table>
+        <tr>
+            <th>Reflection</th>
+            <th>Shield Pen</th>
+            <th>Deadly Inc</th>
+            <th>Regen</th>
+            <th>Leech</th>
+        </tr>
+        <tr>
+            <td><input id='ref' onkeyup="saveValue(this)"></td>
+            <td><input id='shp' onkeyup="saveValue(this)"></td>
+            <td><input id='di' onkeyup="saveValue(this)"></td>
+            <td><input id='reg' onkeyup="saveValue(this)"></td>
+            <td><input id='lec' onkeyup="saveValue(this)"></td>
+        </tr>
+    </table>
+    <br>
+    <button id="run" onclick="run()">Calculate</button>
+    <span id="currentBest"></span>
+    </div>
+
+</body>
+<script type="text/javascript" src='./main.js'></script>
+<script type="text/javascript" src='./problem.js'></script>
+<script type="text/javascript" src='./queue.js'></script>
+<script type="text/javascript" src='./fight.js'></script>
+<script type="text/javascript" src='./engine.js'></script>
+<script type="text/javascript" src='./models/formulas.js'></script>
+<script type="text/javascript" src='./models/ship.js'></script>
+<script type="text/javascript" src='./models/boss.js'></script>
+<script type="text/javascript" src='./models/node.js'></script>
+<script type="text/javascript" src='./rules/droneRule.js'></script>
+<script type="text/javascript" src='./rules/shipRule.js'></script>

@@ -41,7 +41,7 @@ class Engine {
         this.openNodes = createQueue(200, nodes);
     }
 
-    findSolution() {
+    async findSolution() {
         console.log(this.problem);
         let root = this.problem.getInitialState();
         do {
@@ -89,6 +89,7 @@ class Engine {
         }
         this.explosionCounter++;
         if (this.explosionCounter % 50000 == 0) {
+            document.getElementById("currentBest").innerHTML = this.bests[this.bests.length - 1].toString();
             console.log(new Date());
             console.log("bestDepths = " + this.bestDepths.size);
             console.log("openNodes = " + this.getOpenNodesSize());

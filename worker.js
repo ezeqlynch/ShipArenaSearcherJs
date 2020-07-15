@@ -1285,7 +1285,8 @@ class Boss {
 
 
 const runWorker = (e) => {
-
+    console.log(e);
+    return;
     let l = new Ship(e.weL, e.reL, e.huL, e.wiL);
     let m = new Ship(e.weM, e.reM, e.huM, e.wiM);
     let r = new Ship(e.weR, e.reR, e.huR, e.wiR);

@@ -41,7 +41,7 @@ class Engine {
         this.openNodes = createQueue(200, nodes);
     }
 
-    async findSolution() {
+    findSolution() {
         console.log(this.problem);
         let root = this.problem.getInitialState();
         do {

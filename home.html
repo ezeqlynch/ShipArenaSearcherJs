@@ -1,7 +1,67 @@
 <!DOCTYPE html>
 <head></head>
 <body>
-    <input id='stage'>
+    <p>
+        <input id='orbBonus' onkeyup="saveValue(this)"> Orb Bonus (with virtue applied)
+    </p>
+    <p>
+        <input id='saBonus' onkeyup="saveValue(this)"> Space Academy Bonus
+    </p>
+    <p>
+        <input id='guildBonus' onkeyup="saveValue(this)"> Guild Passive Bonus
+    </p>
+    <p>
+        <input id='legBonus' onkeyup="saveValue(this)"> Legendary Dmg
+    </p>
+    <p>
+        <input id='dmAsc' onkeyup="saveValue(this)"> Asc Damage
+    </p>
+    <p>
+        <input id='hpAsc' onkeyup="saveValue(this)"> Asc Health
+    </p>
+    <p>
+        <input id='currUlt' onkeyup="saveValue(this)"> Current Ultinum
+    </p>
+    <p>
+        <input id='currIm' onkeyup="saveValue(this)"> Current Imatter
+    </p>
+    <p>
+        <input id='stage' onkeyup="saveValue(this)"> Baseline Opponent Cleared
+    </p>
+    <p>
+        <input id='totalIm' onkeyup="saveValue(this)"> Total Imatter
+    </p>
+    <p>
+        <input id='totalPCores' onkeyup="saveValue(this)"> Total PCores
+    </p>
+    <p>
+        <input id='totalUlt' onkeyup="saveValue(this)"> Total Ultinum
+    </p>
+    <table>
+        <tr><td></td><th>Left</th><th>Middle</th><th>Right</th></tr>
+        <tr><th scope="row">Weapon</th><td><input id='weL' onkeyup="saveValue(this)"></td><td><input id='weM' onkeyup="saveValue(this)"></td><td><input id='weR' onkeyup="saveValue(this)"></td></tr>
+        <tr><th scope="row">Reactor</th><td><input id='reL' onkeyup="saveValue(this)"></td><td><input id='reM' onkeyup="saveValue(this)"></td><td><input id='reR' onkeyup="saveValue(this)"></td></tr>
+        <tr><th scope="row">Hull</th><td><input id='huL' onkeyup="saveValue(this)"></td><td><input id='huM' onkeyup="saveValue(this)"></td><td><input id='huR' onkeyup="saveValue(this)"></td></tr>
+        <tr><th scope="row">Wings</th><td><input id='wiL' onkeyup="saveValue(this)"></td><td><input id='wiM' onkeyup="saveValue(this)"></td><td><input id='wiR' onkeyup="saveValue(this)"></td></tr>
+    </table>
+    <br>
+    <table>
+        <tr>
+            <th>Reflection</th>
+            <th>Shield Pen</th>
+            <th>Deadly Inc</th>
+            <th>Regen</th>
+            <th>Leech</th>
+        </tr>
+        <tr>
+            <td><input id='ref' onkeyup="saveValue(this)"></td>
+            <td><input id='shp' onkeyup="saveValue(this)"></td>
+            <td><input id='di' onkeyup="saveValue(this)"></td>
+            <td><input id='reg' onkeyup="saveValue(this)"></td>
+            <td><input id='lec' onkeyup="saveValue(this)"></td>
+        </tr>
+    </table>
+    
     <button onclick="run()">asdasd</button>
 </body>
 <script type="text/javascript" src='./main.js'></script>

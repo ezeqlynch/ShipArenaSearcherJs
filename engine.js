@@ -89,7 +89,6 @@ class Engine {
         }
         this.explosionCounter++;
         if (this.explosionCounter % 50000 == 0) {
-            document.getElementById("currentBest").innerHTML = this.bests[this.bests.length - 1].toString();
             console.log(new Date());
             console.log("bestDepths = " + this.bestDepths.size);
             console.log("openNodes = " + this.getOpenNodesSize());

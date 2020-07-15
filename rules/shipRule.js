@@ -1,4 +1,4 @@
-class ArenaShipRule {
+class ShipRule {
     //0 left, 1 middle, 2 right
     //0 weapon, 1 reactor, 2 hull, 3 wings
 

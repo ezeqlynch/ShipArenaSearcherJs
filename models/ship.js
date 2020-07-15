@@ -32,26 +32,25 @@ class Ship {
         }
     }
 
-    // equals(o) {
-    //     if (this == o) return true;
-    //     if (o == null) return false;
-    //     let ship = o;
-    //     return hull == ship.hull &&
-    //         reactor == ship.reactor &&
-    //         weapon == ship.weapon &&
-    //         wing == ship.wing;
-    // }
+    equals(o) {
+        if (this == o) return true;
+        let ship = o;
+        return this.hull == ship.hull &&
+            this.reactor == ship.reactor &&
+            this.weapon == ship.weapon &&
+            this.wing == ship.wing;
+    }
 
     // hashCode() {
     //     return Object.hash(hull, reactor, weapon, wing);
     // }
 
     toString() {
-        return " |" + weapon + "-" + reactor + "-" + hull + "-" + wing + "| ";
+        return " |" + this.weapon + "-" + this.reactor + "-" + this.hull + "-" + this.wing + "| ";
     }
 
     toJson() {
-        return "[[" + weapon + "],[" + reactor + "],[" + hull + "],[" + wing + "]]";
+        return "[[" + this.weapon + "],[" + this.reactor + "],[" + this.hull + "],[" + this.wing + "]]";
     }
 
 

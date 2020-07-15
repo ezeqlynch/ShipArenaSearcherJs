@@ -49,7 +49,7 @@ const fight = (state) => {
     //        System.out.println("Attack 2");
     while (!(healths[0] < 0 && healths[1] < 0 && healths[2] < 0) || healths[3] > 0) {
         let attacks = [-1, -1, -1, -1];
-        for (i = 0; i < attackTimers.length; i++) {
+        for (let i = 0; i < attackTimers.length; i++) {
             attackTimers[i] -= speeds[i];
             if (attackTimers[i] <= 0) {
                 attacks[i] = Math.abs(attackTimers[i] / speeds[i]) == 0 ? 1 : Math.abs(attackTimers[i] / speeds[i]);
@@ -61,10 +61,10 @@ const fight = (state) => {
         order.sort((a,b) => {
             return attacks[a] - attacks[b];
         });
-        console.log(attackTimers);
-        console.log(order);
+        // console.log(attackTimers);
+        // console.log(order);
 
-        for (i = 0; i < order.length; i++) {
+        for (let i = 0; i < order.length; i++) {
             if (order[i] == 3 && attacks[order[i]] >= 0) {
                 //boss attacks
                 //                    System.out.println("\t\t\t\t\t\tAttack B");
@@ -150,17 +150,17 @@ const fight = (state) => {
                     if (healths[1] <= 0) {
                         //                            System.out.println("killed ship 1");
                         //                            System.out.println(armors[3]);
-                        console.log(healths);
+                        // console.log(healths);
                         return healths[3] + refH;
                     }
                 } else {
                     //                        System.out.println(b.getIndex());
                     //                        System.out.println(Arrays.toString(healths));
-                    console.log(healths);
+                    // console.log(healths);
                     return healths[3];
                 }
                 if (healths[3] <= 0) {
-                    console.log(healths);
+                    // console.log(healths);
                     return 0.0;
                 }
             } else if (attacks[order[i]] >= 0 && healths[order[i]] > 0) {
@@ -170,7 +170,7 @@ const fight = (state) => {
                 armors[3] -= armors[3] - damageToShield < 0 ? armors[3] : damageToShield;
                 healths[3] -= damageToHp;
                 if (healths[3] <= 0) {
-                    console.log(healths);
+                    // console.log(healths);
                     return 0.0;
                 }
                 healths[order[i]] = (healths[order[i]] + regens[order[i]] + leech * damageToHp > maxHealths[order[i]]) ?
@@ -189,6 +189,6 @@ const fight = (state) => {
         }
         //            System.out.println("-------------------------");
     }
-    console.log(healths);
+    // console.log(healths);
     return 0.0;
 }

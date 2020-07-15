@@ -22,8 +22,13 @@ class NodeSA {
         this.trophyPoints = trophyPoints(this);
         this.rule = rule;
         this.parent = null;
+        this.minTrophy = 50;
     }
 
+
+    setParent = p => {
+        this.parent = p;
+    }
 
     calcTrophyPoints() {
         this.trophyPoints = trophyPoints(this);
@@ -163,12 +168,12 @@ class NodeSA {
     }
 
     clone() {
-        return new StateSA(this.totalUlt, this.totalImatter, this.challengeNumber, this.totalPCores, this.leftShip.clone(), this.middleShip.clone(),
-            this.rightShip.clone(), this.drones.clone(), this.healthTrophy, this.damageTrophy, this.initDamageMult, this.initHealthMult, this.currUlt, this.currImatter, this.getRule());
+        return new NodeSA(this.totalUlt, this.totalImatter, this.challengeNumber, this.totalPCores, this.leftShip.clone(), this.middleShip.clone(),
+            this.rightShip.clone(), [...this.drones], this.healthTrophy, this.damageTrophy, this.initDamageMult, this.initHealthMult, this.currUlt, this.currImatter, this.rule);
     }
 
     setHpLeft() {
-        this.hpLeft = Fight.fight(this);
+        this.hpLeft = fight(this);
     }
 
     setHealthTrophy(v) {
@@ -185,14 +190,14 @@ class NodeSA {
         this.calcTrophyPoints();
         let cut = 110; // >100 al principio pq sino no calcula con 100
         let ht = this.healthTrophy;
-        for (i = this.healthTrophy; i < cut; i++) {
+        for (let i = this.healthTrophy; i < cut; i++) {
             if (!this.canBuyTrophies(i, 0) || i > 100) {
-                i = minTrophy;
+                i = this.minTrophy;
                 cut = ht;
                 continue;
             }
             let tfy = this.maxTrophies(i);
-            if (tfy[1] <= minTrophy || tfy[0] <= minTrophy)
+            if (tfy[1] <= this.minTrophy || tfy[0] <= this.minTrophy)
                 continue;
             i = tfy[0];
             this.setHealthTrophy(tfy[0]);
@@ -288,19 +293,20 @@ class NodeSA {
             "-" + this.drones.toString();
     }
 
-    // public ArrayList<Byte> toByteArray() {
-    //     BigInteger bi = BigInteger.valueOf(this.leftShip.weapon);
-    //     bi = bi.shiftLeft(8).add(BigInteger.valueOf(this.middleShip.weapon)).shiftLeft(8).add(BigInteger.valueOf(this.rightShip.weapon))
-    //         .shiftLeft(8).add(BigInteger.valueOf(this.leftShip.hull)).shiftLeft(8).add(BigInteger.valueOf(this.middleShip.hull))
-    //         .shiftLeft(8).add(BigInteger.valueOf(this.rightShip.hull)).shiftLeft(8).add(BigInteger.valueOf(this.leftShip.wing))
-    //         .shiftLeft(8).add(BigInteger.valueOf(this.rightShip.wing)).shiftLeft(10).add(BigInteger.valueOf(this.challengeNumber));
-    //     for (int drone : drones) {
-    //         bi = bi.shiftLeft(5).add(BigInteger.valueOf(25 - drone));
-    //     }
-    //     ArrayList < Byte > bb = new ArrayList<>();
-    //     for (byte b : bi.toByteArray()) {
-    //         bb.add(b);
-    //     }
-    //     return bb;
-    // }
+    toByteArray() {
+        let bi = `0b\
+${this.middleShip.weapon.toString(2).padStart(8, '0')}\
+${this.rightShip.weapon.toString(2).padStart(8, '0')}\
+${this.leftShip.hull.toString(2).padStart(8, '0')}\
+${this.middleShip.hull.toString(2).padStart(8, '0')}\
+${this.rightShip.hull.toString(2).padStart(8, '0')}\
+${this.rightShip.wing.toString(2).padStart(8, '0')}\
+${this.challengeNumber.toString(2).padStart(10, '0')}\
+${this.drones[0].toString(2).padStart(5, '0')}\
+${this.drones[1].toString(2).padStart(5, '0')}\
+${this.drones[2].toString(2).padStart(5, '0')}\
+${this.drones[3].toString(2).padStart(5, '0')}\
+${this.drones[4].toString(2).padStart(5, '0')}`;
+        return BigInt(bi);
+    }
 }

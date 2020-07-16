@@ -8,7 +8,6 @@ const runWorker = (e) => {
         e.dmgMult, e.hpMult, e.currUlt, e.currIm, null, 
         e.expedpoints, e.fuelUpgrades, e.totalLab, e.trophies100)
 
-    getTrophies(s);
     let p = new ArenaProblem(s);
     let pEngine = new Engine(p, 750);
 

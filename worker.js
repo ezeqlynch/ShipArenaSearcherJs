@@ -86,7 +86,6 @@ const runWorker = (e) => {
 }
 
 self.addEventListener('message', e => {
-    importScripts('./models/engine.js');
     importScripts('./models/boss.js');
     importScripts('./models/formulas.js');
     importScripts('./models/node.js');

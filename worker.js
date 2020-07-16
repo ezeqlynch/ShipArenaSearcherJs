@@ -1,4 +1,3 @@
-importScripts('engine.js');
 // class Engine {
 //     // private HashSet<List<Byte>> bestDepths;
 //     // private LinkedList<StateSA> bests;
@@ -1372,5 +1371,6 @@ const runWorker = (e) => {
 }
 
 self.addEventListener('message', e => {
+    importScripts('engine.js');
     runWorker(e.data);
 })

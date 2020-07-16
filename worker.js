@@ -7,10 +7,10 @@ const runWorker = (e) => {
         l, m, r, [e.ref, e.shp, e.di, e.reg, e.lec], 0, 0, 
         e.dmgMult, e.hpMult, e.currUlt, e.currIm, null, 
         e.expedpoints, e.fuelUpgrades, e.totalLab, e.trophies100)
-
+    let root = s.clone();
+    root.challengeNumber = "INIT";
     let p = new ArenaProblem(s);
     let pEngine = new Engine(p, 750);
-
     let sol = pEngine.findSolution()[0];
     // if (solutions[0].length > 0) {
     //     listRules(solutions[0], true);
@@ -18,6 +18,7 @@ const runWorker = (e) => {
     // } else {
     //     console.log("There was no solution found");
     // }
+    let longPrint = true;
     let list = [];
     let w = sol[0].parent;
     if (w == null) {
@@ -52,7 +53,7 @@ const runWorker = (e) => {
         console.log("Beat up to challenge " + currentChallenge);
     }
     let prev = trueList[0];
-    let truestList = [];
+    let truestList = [root];
     for (let i = 0; i < trueList.length; i++) {
         const r = trueList[i];
         if (prev.equalsEnd(r)) {

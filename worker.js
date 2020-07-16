@@ -1,171 +1,172 @@
-class Engine {
-    // private HashSet<List<Byte>> bestDepths;
-    // private LinkedList<StateSA> bests;
-    // private LinkedList<StateSA> bestsFive;
-    // private Queue<StateSA> openNodes;
-    // private int maxChallenge;
+importScripts('engine.js');
+// class Engine {
+//     // private HashSet<List<Byte>> bestDepths;
+//     // private LinkedList<StateSA> bests;
+//     // private LinkedList<StateSA> bestsFive;
+//     // private Queue<StateSA> openNodes;
+//     // private int maxChallenge;
 
 
-    constructor(problem, maxChallenge) {
-        this.problem = problem;
-        this.bestDepths = new Set();
-        this.explosionCounter = 0;
-        this.bests = [];
-        this.bestsFive = [];
-        this.openNodes = createQueue(200, []);
-        this.maxChallenge = maxChallenge;
-        this.lowestHp = 0;
-        this.lowestHpFive = 0;
-        this.lowestHigh = 1;
-        this.lowestHighFive = 1;
-    }
+//     constructor(problem, maxChallenge) {
+//         this.problem = problem;
+//         this.bestDepths = new Set();
+//         this.explosionCounter = 0;
+//         this.bests = [];
+//         this.bestsFive = [];
+//         this.openNodes = createQueue(200, []);
+//         this.maxChallenge = maxChallenge;
+//         this.lowestHp = 0;
+//         this.lowestHpFive = 0;
+//         this.lowestHigh = 1;
+//         this.lowestHighFive = 1;
+//     }
 
-    getNextNode() {
-        return this.openNodes.shift();
-    }
+//     getNextNode() {
+//         return this.openNodes.shift();
+//     }
 
-    addToOpenNodes(node) {
-        this.openNodes.push(node);
-    }
+//     addToOpenNodes(node) {
+//         this.openNodes.push(node);
+//     }
 
-    openNodesIsEmpty() {
-        return this.openNodes.isEmpty();
-    }
+//     openNodesIsEmpty() {
+//         return this.openNodes.isEmpty();
+//     }
 
-    getOpenNodesSize() {
-        return this.openNodes.length();
-    }
+//     getOpenNodesSize() {
+//         return this.openNodes.length();
+//     }
 
-    stepOnOpenNodes(nodes) {
-        this.shuffle(nodes);
-        this.openNodes = createQueue(200, nodes);
-    }
+//     stepOnOpenNodes(nodes) {
+//         this.shuffle(nodes);
+//         this.openNodes = createQueue(200, nodes);
+//     }
 
-    findSolution() {
-        console.log(this.problem);
-        let root = this.problem.getInitialState();
-        do {
-            console.log(root.hpLeft);
-            if (root.hpLeft <= 0) {
-                root.upChall();
-            }
-            root.setHpLeft();
-        } while (root.hpLeft <= 0.0);
-        this.addToOpenNodes(root);
-        let max = root;
-        while (max.doTrophies()) {
-            let nn = max.clone();
-            nn.upChall();
-            nn.setParent(max);
-            max = nn;
-        }
-        // console.log(max);
-        //        while (!openNodesIsEmpty()) {
-        //            max = getNextNode();
-        //            trophyExplode(max, problem);
-        //        }
-        this.openNodes = createQueue(200, []);
-        this.addToOpenNodes(max);
-        this.bests.push(max);
-        while (!this.openNodesIsEmpty()) {
-            let currentNode = this.getNextNode();
-            if (this.openNodes.length() > 1000000/* || (openNodes.size() > 800000 && bestDepths.size() > 10000000) || bestDepths.size() > 10000000*/) {
-                this.bests.reverse();
-                this.stepOnOpenNodes(this.bests);
-                this.bestDepths.clear();
-                currentNode = this.bests[0];
-            }
-            this.explode(currentNode);
-        }
-        this.bests.reverse();
-        this.bestsFive.reverse();
-        return [this.bests, this.bestsFive];
+//     findSolution() {
+//         console.log(this.problem);
+//         let root = this.problem.getInitialState();
+//         do {
+//             console.log(root.hpLeft);
+//             if (root.hpLeft <= 0) {
+//                 root.upChall();
+//             }
+//             root.setHpLeft();
+//         } while (root.hpLeft <= 0.0);
+//         this.addToOpenNodes(root);
+//         let max = root;
+//         while (max.doTrophies()) {
+//             let nn = max.clone();
+//             nn.upChall();
+//             nn.setParent(max);
+//             max = nn;
+//         }
+//         // console.log(max);
+//         //        while (!openNodesIsEmpty()) {
+//         //            max = getNextNode();
+//         //            trophyExplode(max, problem);
+//         //        }
+//         this.openNodes = createQueue(200, []);
+//         this.addToOpenNodes(max);
+//         this.bests.push(max);
+//         while (!this.openNodesIsEmpty()) {
+//             let currentNode = this.getNextNode();
+//             if (this.openNodes.length() > 1000000/* || (openNodes.size() > 800000 && bestDepths.size() > 10000000) || bestDepths.size() > 10000000*/) {
+//                 this.bests.reverse();
+//                 this.stepOnOpenNodes(this.bests);
+//                 this.bestDepths.clear();
+//                 currentNode = this.bests[0];
+//             }
+//             this.explode(currentNode);
+//         }
+//         this.bests.reverse();
+//         this.bestsFive.reverse();
+//         return [this.bests, this.bestsFive];
 
-    }
+//     }
 
-    explode(node) {
-        if (node.challengeNumber >= this.maxChallenge) {
-            return;
-        }
-        this.explosionCounter++;
-        if (this.explosionCounter % 50000 == 0) {
-            console.log(new Date());
-            console.log("bestDepths = " + this.bestDepths.size);
-            console.log("openNodes = " + this.getOpenNodesSize());
-            console.log(this.bests[this.bests.length - 1].toString());
-        }
+//     explode(node) {
+//         if (node.challengeNumber >= this.maxChallenge) {
+//             return;
+//         }
+//         this.explosionCounter++;
+//         if (this.explosionCounter % 50000 == 0) {
+//             console.log(new Date());
+//             console.log("bestDepths = " + this.bestDepths.size);
+//             console.log("openNodes = " + this.getOpenNodesSize());
+//             console.log(this.bests[this.bests.length - 1].toString());
+//         }
 
-        if (node.parent != null /*&& ((StateSA)node.getParent()).getChallengeNumber() < node.getChallengeNumber()*/) {
-            let nn = node.clone();
-            while (nn.doTrophies() && nn.challengeNumber < this.maxChallenge) {
-                nn.upChall();
-                nn.setParent(node);
-                node = nn;
-                nn = node.clone();
-            }
-        }
+//         if (node.parent != null /*&& ((StateSA)node.getParent()).getChallengeNumber() < node.getChallengeNumber()*/) {
+//             let nn = node.clone();
+//             while (nn.doTrophies() && nn.challengeNumber < this.maxChallenge) {
+//                 nn.upChall();
+//                 nn.setParent(node);
+//                 node = nn;
+//                 nn = node.clone();
+//             }
+//         }
 
 
-        let rl = this.problem.getRules(node);
-        for (let i = 0; i < rl.length; i++) {
-            const rule = rl[i];
-            let newState = rule.applyToState(node);
-            if (this.bestDepths.has(newState.toByteArray())) {
-                continue;
-            }
-            //            rule.postApplyToState(newState);
-            this.updateBestCosts(newState);
-            newState.setParent(node);
-            this.addToOpenNodes(newState);
-        }
-    }
+//         let rl = this.problem.getRules(node);
+//         for (let i = 0; i < rl.length; i++) {
+//             const rule = rl[i];
+//             let newState = rule.applyToState(node);
+//             if (this.bestDepths.has(newState.toByteArray())) {
+//                 continue;
+//             }
+//             //            rule.postApplyToState(newState);
+//             this.updateBestCosts(newState);
+//             newState.setParent(node);
+//             this.addToOpenNodes(newState);
+//         }
+//     }
 
-    updateBestCosts(node) {
-        this.bestDepths.add(node.toByteArray());
-        if (this.bests.length < 100) {
-            this.bests.push(node);
-        } else if (node.challengeNumber > this.lowestHigh || (node.challengeNumber == this.lowestHigh && node.currUlt >= this.lowestHp)) {
-            this.bests.sort((a, b) => {
-                if (a != b) {
-                    return a.challengeNumber - b.challengeNumber;
-                } else {
-                    return a.currUlt - b.currUlt;
-                }
-            })
-            if (!this.bests.some(n => n.equals(node))) {
-                this.bests[0] = node;
-                this.lowestHigh = this.bests[1].challengeNumber;
-                this.lowestHp = this.bests[1].currUlt;
-            }
-        }
-        if (node.challengeNumber % 5 == 0) {
-            if (this.bestsFive.length < 100) {
-                this.bestsFive.push(node);
-            } else if (node.challengeNumber > this.lowestHighFive || (node.challengeNumber == this.lowestHighFive && node.currUlt >= this.lowestHpFive)) {
-                this.bestsFive.sort((a, b) => {
-                    if (a != b) {
-                        return a.challengeNumber - b.challengeNumber;
-                    } else {
-                        return a.currUlt - b.currUlt;
-                    }
-                })
-                if (!this.bestsFive.some(n => n.equals(node))) {
-                    this.bestsFive[0] = node;
-                    this.lowestHighFive = this.bestsFive[1].challengeNumber;
-                    this.lowestHpFive = this.bestsFive[1].currUlt;
+//     updateBestCosts(node) {
+//         this.bestDepths.add(node.toByteArray());
+//         if (this.bests.length < 100) {
+//             this.bests.push(node);
+//         } else if (node.challengeNumber > this.lowestHigh || (node.challengeNumber == this.lowestHigh && node.currUlt >= this.lowestHp)) {
+//             this.bests.sort((a, b) => {
+//                 if (a != b) {
+//                     return a.challengeNumber - b.challengeNumber;
+//                 } else {
+//                     return a.currUlt - b.currUlt;
+//                 }
+//             })
+//             if (!this.bests.some(n => n.equals(node))) {
+//                 this.bests[0] = node;
+//                 this.lowestHigh = this.bests[1].challengeNumber;
+//                 this.lowestHp = this.bests[1].currUlt;
+//             }
+//         }
+//         if (node.challengeNumber % 5 == 0) {
+//             if (this.bestsFive.length < 100) {
+//                 this.bestsFive.push(node);
+//             } else if (node.challengeNumber > this.lowestHighFive || (node.challengeNumber == this.lowestHighFive && node.currUlt >= this.lowestHpFive)) {
+//                 this.bestsFive.sort((a, b) => {
+//                     if (a != b) {
+//                         return a.challengeNumber - b.challengeNumber;
+//                     } else {
+//                         return a.currUlt - b.currUlt;
+//                     }
+//                 })
+//                 if (!this.bestsFive.some(n => n.equals(node))) {
+//                     this.bestsFive[0] = node;
+//                     this.lowestHighFive = this.bestsFive[1].challengeNumber;
+//                     this.lowestHpFive = this.bestsFive[1].currUlt;
 
-                }
-            }
-        }
-    }
+//                 }
+//             }
+//         }
+//     }
 
-    shuffle = arr => {
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-    }
-}
+//     shuffle = arr => {
+//         for (let i = arr.length - 1; i > 0; i--) {
+//             const j = Math.floor(Math.random() * (i + 1));
+//             [arr[i], arr[j]] = [arr[j], arr[i]];
+//         }
+//     }
+// }
 
 function createQueue(ic, init) {
     let that = {};
@@ -1198,40 +1199,43 @@ const calcHp = () => {
 }
 
 const trophyPoints = s => {
-    // let seriesLvl = s.getChallengeNumber();
-    // let imatterLvl = (int) Math.floor(Math.sqrt((s.getTotalImatter() - 20) / 20) + 1);
-    // let pcoresLvl = (int) Math.floor(Math.sqrt((s.getTotalPCores() - 20) / 20) + 1);
-    // let ultinumLvl = (int) Math.floor(Math.sqrt((s.getTotalUlt() - 20) / 20) + 1);
-    // int powerLvl = (int) Math.floor(Math.sqrt((s.getShipPower() - 25) / 5) + 1);
-    // int imatterTfy = 0;
-    // int pcoresTfy = 0;
-    // int ultinumTfy = 0;
-    // int seriesTfy = 0;
-    // int powerTfy = 0;
-    // while (imatterLvl > 0 || pcoresLvl > 0 || ultinumLvl > 0 || seriesLvl > 0 || powerLvl > 0) {
-    //     if (imatterLvl > 0) {
-    //         imatterTfy += imatterLvl;
-    //         imatterLvl -= 10;
-    //     }
-    //     if (pcoresLvl > 0) {
-    //         pcoresTfy += pcoresLvl;
-    //         pcoresLvl -= 10;
-    //     }
-    //     if (ultinumLvl > 0) {
-    //         ultinumTfy += ultinumLvl;
-    //         ultinumLvl -= 10;
-    //     }
-    //     if (seriesLvl > 0) {
-    //         seriesTfy += seriesLvl;
-    //         seriesLvl -= 10;
-    //     }
-    //     if (powerLvl > 0) {
-    //         powerTfy += powerLvl;
-    //         powerLvl -= 10;
-    //     }
-    // }
-    // return imatterTfy + pcoresTfy + ultinumTfy + seriesTfy * 2 + powerTfy;
-    return 100000;
+    let seriesLvl = s.getChallengeNumber();
+    let imatterLvl = Math.floor(Math.sqrt((s.getTotalImatter() - 20) / 20) + 1);
+    let pcoresLvl = Math.floor(Math.sqrt((s.getTotalPCores() - 20) / 20) + 1);
+    let ultinumLvl = Math.floor(Math.sqrt((s.getTotalUlt() - 20) / 20) + 1);
+    let powerLvl = Math.floor(Math.sqrt((s.getShipPower() - 25) / 5) + 1);
+    console.log(imatterLvl);
+    console.log(pcoresLvl);
+    console.log(ultinumLvl);
+    console.log(powerLvl);
+    let imatterTfy = 0;
+    let pcoresTfy = 0;
+    let ultinumTfy = 0;
+    let seriesTfy = 0;
+    let powerTfy = 0;
+    while (imatterLvl > 0 || pcoresLvl > 0 || ultinumLvl > 0 || seriesLvl > 0 || powerLvl > 0) {
+        if (imatterLvl > 0) {
+            imatterTfy += imatterLvl * 3;
+            imatterLvl -= 10;
+        }
+        if (pcoresLvl > 0) {
+            pcoresTfy += pcoresLvl * 3;
+            pcoresLvl -= 10;
+        }
+        if (ultinumLvl > 0) {
+            ultinumTfy += ultinumLvl * 3;
+            ultinumLvl -= 10;
+        }
+        if (seriesLvl > 0) {
+            seriesTfy += seriesLvl * 5;
+            seriesLvl -= 10;
+        }
+        if (powerLvl > 0) {
+            powerTfy += powerLvl * 5;
+            powerLvl -= 10;
+        }
+    }
+    return imatterTfy + pcoresTfy + ultinumTfy + seriesTfy * 2 + powerTfy;
 }
 
 const hull2hp = calcHp();

@@ -1,5 +1,5 @@
 const run = () => {
-    // let worker = new Worker('worker.js');
+    let worker = new Worker('worker.js');
 
     let orbBonus = +document.getElementById("orbBonus").value;
     let guildBonus = +document.getElementById("guildBonus").value;

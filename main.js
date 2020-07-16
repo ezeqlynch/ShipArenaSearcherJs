@@ -1,5 +1,5 @@
 const run = () => {
-    let worker = new Worker('worker.js');
+    // let worker = new Worker('worker.js');
 
     let orbBonus = +document.getElementById("orbBonus").value;
     let guildBonus = +document.getElementById("guildBonus").value;
@@ -13,6 +13,10 @@ const run = () => {
     let totalUlt = +document.getElementById("totalUlt").value;
     let totalIm = +document.getElementById("totalIm").value;
     let totalPCores = +document.getElementById("totalPCores").value;
+    let expedPoints = +document.getElementById("expedPoints").value;
+    let fuelUpgrades = +document.getElementById("fuelUpgrades").value;
+    let totalLab = +document.getElementById("totalLab").value;
+    let trophies100 = document.getElementById("trophies").checked;
     let dmgMult = (1.0 + orbBonus) * (1.0 + saBonus) * (1.0 + guildBonus) * (1.0 + legBonus) * (1.0 + dmAsc);
     let hpMult = (1.0 + orbBonus) * (1.0 + saBonus) * (1.0 + hpAsc);
     let weL = +document.getElementById("weL").value;
@@ -33,20 +37,24 @@ const run = () => {
     let di = +document.getElementById("di").value;
     let reg = +document.getElementById("reg").value;
     let lec = +document.getElementById("lec").value;
-    let payload = {totalUlt, totalIm, stage, totalPCores, weL, reL, huL, wiL, weM, reM, huM, wiM, weR, reR, huR, wiR, ref, shp, di, reg, lec, dmgMult, hpMult, currUlt, currIm}
+    let payload = {totalUlt, totalIm, stage, totalPCores, expedPoints, fuelUpgrades, totalLab, 
+        weL, reL, huL, wiL, weM, reM, huM, wiM, weR, reR, huR, wiR, ref, shp, di, reg, lec, 
+        dmgMult, hpMult, currUlt, currIm, trophies100}
     worker.postMessage(payload);
 
     // let l = new Ship(weL, reL, huL, wiL);
     // let m = new Ship(weM, reM, huM, wiM);
     // let r = new Ship(weR, reR, huR, wiR);
-    // let s = new NodeSA(totalUlt, totalIm, stage, totalPCores, l, m, r, [ref,shp,di,reg,lec], 0, 0, dmgMult, hpMult, currUlt, currIm, null)
+    // let s = new NodeSA(totalUlt, totalIm, stage, totalPCores, l, m, r, [ref, shp, di, reg, lec], 0, 0, dmgMult, hpMult, currUlt, currIm, null, expedPoints, fuelUpgrades, totalLab, trophies100)
+    // let root = s.clone();
+    // root.challengeNumber = "INIT";
 
     // let p = new ArenaProblem(s);
     // let pEngine = new Engine(p, 900);
     
-    // let solutions = await pEngine.findSolution();
+    // let solutions = pEngine.findSolution();
     // if (solutions[0].length > 0) {
-    //     listRules(solutions[0], true);
+    //     listRules(solutions[0], true, root);
     //     // listRules(solutions[1], false);
     // } else {
     //     console.log("There was no solution found");
@@ -55,74 +63,81 @@ const run = () => {
 
 self.addEventListener('message', e => {
     console.log(e);
-    listRules(e.data[0], false);
+    if(!e.data.state) {
+        listRules(e.data[0], false);
+    } else {
+        document.getElementById("best").innerHTML = e.data.state.bestStage;
+        document.getElementById("open").innerHTML = e.data.state.openNodes;
+        document.getElementById("time").innerHTML = e.data.state.date;
+    }
 });
 
-listRules = (sol, longPrint) => {
-    // let list = [];
-    // let w = sol[0].parent;
-    // if (w == null) {
-    //     console.log("There was nothing to be found.");
-    //     return;
-    // }
-    // list.push(w);
-    // while (w.parent != null) {
+listRules = (sol, longPrint, root) => {
+    let list = [];
+    let w = sol[0].parent;
+    if (w == null) {
+        console.log("There was nothing to be found.");
+        return;
+    }
+    list.push(w);
+    while (w.parent != null) {
 
-    //     list.push(w);
-    //     w = w.parent;
-    // }
-    // list.push(w);
-    // list.reverse();
+        list.push(w);
+        w = w.parent;
+    }
+    list.push(w);
+    list.reverse();
     // console.log(list);
-    // let trueList = [];
-    // let currCh = 0;
-    // for (let i = 0; i < list.length; i++) {
-    //     const r = list[i];
-    //     if (currCh != r.challengeNumber) {
-    //         trueList.push(r);
-    //     }
-    //     currCh = r.challengeNumber;
-    // }
+    let trueList = [];
+    let currCh = 0;
+    for (let i = 0; i < list.length; i++) {
+        const r = list[i];
+        if (currCh != r.challengeNumber) {
+            trueList.push(r);
+        }
+        currCh = r.challengeNumber;
+    }
     // console.log(trueList);
-    // let currentChallenge = trueList[0].challengeNumber;
-    // let sb = '';
-    // sb = sb.concat(trueList[0].toJson());
-    // sb = sb.concat('\t');
-    // if (longPrint) {
-    //     console.log(trueList[0].toString());
-    //     console.log("Beat up to challenge " + currentChallenge);
-    // }
-    // let prev = trueList[0];
-    // let truestList = [];
-    // for (let i = 0; i < trueList.length; i++) {
-    //     const r = trueList[i];
-    //     if (prev.equalsEnd(r)) {
-    //         prev = r;
-    //         continue;
-    //     }
-    //     if (r.challengeNumber > currentChallenge) {
-    //         sb = sb.concat(r.toJson());
-    //         sb = sb.concat('\t');
-    //         truestList.push(r);
-    //         currentChallenge = r.challengeNumber;
-    //         if (longPrint) {
-    //             console.log(r.toString());
-    //             console.log("Beat up to challenge " + currentChallenge);
-    //         }
-    //         prev = r;
-    //     }
-    // }
-    // if (currentChallenge != trueList[trueList.length - 1].challengeNumber) {
-    //     sb = sb.concat(trueList[trueList.length - 1].toJson());
-    //     sb = sb.concat('\t');
-    //     truestList.push(trueList[trueList.length - 1]);
-    //     if (longPrint) {
-    //         console.log(trueList[trueList.length - 1].toString());
-    //         console.log("Beat up to challenge " + trueList[trueList.length - 1].challengeNumber);
-    //     }
-    // }
+    let currentChallenge = trueList[0].challengeNumber;
+    let sb = '';
+    sb = sb.concat(trueList[0].toJson());
+    sb = sb.concat('\t');
+    if (longPrint) {
+        console.log(trueList[0].toString());
+        console.log("Beat up to challenge " + currentChallenge);
+    }
+    let prev = trueList[0];
+    let truestList = [root];
+    for (let i = 0; i < trueList.length; i++) {
+        const r = trueList[i];
+        if (prev.equalsEnd(r)) {
+            prev = r;
+            continue;
+        }
+        if (r.challengeNumber > currentChallenge) {
+            sb = sb.concat(r.toJson());
+            sb = sb.concat('\t');
+            truestList.push(r);
+            currentChallenge = r.challengeNumber;
+            if (longPrint) {
+                console.log(r.toString());
+                console.log("Beat up to challenge " + currentChallenge);
+            }
+            prev = r;
+        }
+    }
+    if (currentChallenge != trueList[trueList.length - 1].challengeNumber) {
+        sb = sb.concat(trueList[trueList.length - 1].toJson());
+        sb = sb.concat('\t');
+        truestList.push(trueList[trueList.length - 1]);
+        if (longPrint) {
+            console.log(trueList[trueList.length - 1].toString());
+            console.log("Beat up to challenge " + trueList[trueList.length - 1].challengeNumber);
+        }
+    }
     console.log('---');
-    putOnTable(sol);
+    // putOnTable(sol);
+    putOnTable(truestList);
 }
 
 const blue = "background-color: #6d9eeb;";
@@ -288,6 +303,15 @@ const openTab = (evt, tab) => {
     evt.currentTarget.className += " active";
 }
 
+const trophies100 = (checkbox) => {
+    document.getElementById("totalIm").disabled = checkbox.checked;
+    document.getElementById("totalPCores").disabled = checkbox.checked;
+    document.getElementById("expedPoints").disabled = checkbox.checked;
+    document.getElementById("fuelUpgrades").disabled = checkbox.checked;
+    document.getElementById("totalLab").disabled = checkbox.checked;
+    document.getElementById("totalUlt").disabled = checkbox.checked;
+}
+
 document.getElementById("orbBonus").value = getSavedValue("orbBonus");
 document.getElementById("guildBonus").value = getSavedValue("guildBonus");
 document.getElementById("saBonus").value = getSavedValue("saBonus");
@@ -300,6 +324,11 @@ document.getElementById("stage").value = getSavedValue("stage");
 document.getElementById("totalUlt").value = getSavedValue("totalUlt");
 document.getElementById("totalIm").value = getSavedValue("totalIm");
 document.getElementById("totalPCores").value = getSavedValue("totalPCores");
+document.getElementById("expedPoints").value = getSavedValue("expedPoints");
+document.getElementById("fuelUpgrades").value = getSavedValue("fuelUpgrades");
+document.getElementById("totalLab").value = getSavedValue("totalLab");
+
+
 document.getElementById("weL").value = getSavedValue("weL");
 document.getElementById("weM").value = getSavedValue("weM");
 document.getElementById("weR").value = getSavedValue("weR");

@@ -11,13 +11,14 @@ table {
 
 table, th, td {
   border: 1px solid black;
+  white-space: nowrap;
 }
 
 td {
     text-align: right;
 }
 
-#leftWings, #middleWings, #rightWings, .thick {
+#leftWings, #middleWings, #rightWings, .thick, #leech, #stageTable{
     border-bottom: 2px solid black;
 }
 
@@ -106,6 +107,7 @@ td {
     <p>
         <input id='stage' onkeyup="saveValue(this)"> Baseline Opponent Cleared
     </p>
+    <input type="checkbox" id="trophies" name="trophies", onclick="trophies100(this)"> 100/100 Trophies
     <p>
         <input id='totalIm' onkeyup="saveValue(this)"> Total Imatter
     </p>
@@ -114,6 +116,15 @@ td {
     </p>
     <p>
         <input id='totalUlt' onkeyup="saveValue(this)"> Total Ultinum
+    </p>
+    <p>
+        <input id='expedPoints' onkeyup="saveValue(this)"> Expedition Points
+    </p>
+    <p>
+        <input id='fuelUpgrades' onkeyup="saveValue(this)"> Fuel Upgrades
+    </p>
+    <p>
+        <input id='totalLab' onkeyup="saveValue(this)"> Lab Upgrades
     </p>
     <table>
         <tr><td></td><th>Left</th><th>Middle</th><th>Right</th></tr>
@@ -141,7 +152,9 @@ td {
     </table>
     <br>
     <button id="run" onclick="run()">Calculate</button>
-    <span id="currentBest"></span>
+    <div id="currentBest">
+        <span id="best"></span> <span id="open"></span> <span id="time"></span>
+    </div>
     </div>
 
 </body>

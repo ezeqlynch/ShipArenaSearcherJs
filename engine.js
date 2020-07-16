@@ -45,28 +45,25 @@ class Engine {
         console.log(this.problem);
         let root = this.problem.getInitialState();
         do {
-            console.log(root.hpLeft);
             if (root.hpLeft <= 0) {
                 root.upChall();
             }
             root.setHpLeft();
         } while (root.hpLeft <= 0.0);
         this.addToOpenNodes(root);
-        let max = root;
+
+        let max = root.clone();
         while(max.doTrophies()) {
-            let nn = max.clone();
-            nn.upChall();
-            nn.setParent(max);
-            max = nn;
+            max.upChall();
+            max.setParent(root);
+            root = max;
+            max = root.clone();
         }
-        // console.log(max);
-//        while (!openNodesIsEmpty()) {
-//            max = getNextNode();
-//            trophyExplode(max, problem);
-//        }
+
         this.openNodes = createQueue(200, []);
-        this.addToOpenNodes(max);
-        this.bests.push(max);
+        this.addToOpenNodes(root);
+        this.bests.push(root);
+
         while (!this.openNodesIsEmpty()){
             let currentNode = this.getNextNode();
             if(this.openNodes.length() > 1000000/* || (openNodes.size() > 800000 && bestDepths.size() > 10000000) || bestDepths.size() > 10000000*/) {
@@ -79,6 +76,7 @@ class Engine {
         }
         this.bests.reverse();
         this.bestsFive.reverse();
+        console.log(this.explosionCounter);
         return [this.bests, this.bestsFive];
 
     }
@@ -93,6 +91,11 @@ class Engine {
             console.log("bestDepths = " + this.bestDepths.size);
             console.log("openNodes = " + this.getOpenNodesSize());
             console.log(this.bests[this.bests.length-1].toString());
+            self.postMessage({state: {
+                openNodes: this.getOpenNodesSize(),
+                bestStage: this.bests[this.bests.length - 1].challengeNumber,
+                date: new Date()
+            }})
         }
 
         if(node.parent != null /*&& ((StateSA)node.getParent()).getChallengeNumber() < node.getChallengeNumber()*/){

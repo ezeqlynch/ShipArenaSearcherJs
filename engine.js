@@ -91,6 +91,7 @@ class Engine {
             console.log("bestDepths = " + this.bestDepths.size);
             console.log("openNodes = " + this.getOpenNodesSize());
             console.log(this.bests[this.bests.length-1].toString());
+            console.log(self);
             self.postMessage({state: {
                 openNodes: this.getOpenNodesSize(),
                 bestStage: this.bests[this.bests.length - 1].challengeNumber,

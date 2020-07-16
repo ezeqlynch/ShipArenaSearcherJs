@@ -94,7 +94,7 @@ self.addEventListener('message', e => {
     importScripts('./rules/shipRule.js');
     importScripts('engine.js');
     importScripts('fight.js');
-    importScripts('promblem.js');
+    importScripts('problem.js');
     importScripts('queue.js');
     runWorker(e.data);
 })

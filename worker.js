@@ -1199,10 +1199,10 @@ const calcHp = () => {
 }
 
 const trophyPoints = s => {
-    let seriesLvl = s.getChallengeNumber();
-    let imatterLvl = Math.floor(Math.sqrt((s.getTotalImatter() - 20) / 20) + 1);
-    let pcoresLvl = Math.floor(Math.sqrt((s.getTotalPCores() - 20) / 20) + 1);
-    let ultinumLvl = Math.floor(Math.sqrt((s.getTotalUlt() - 20) / 20) + 1);
+    let seriesLvl = s.challengeNumber;
+    let imatterLvl = Math.floor(Math.sqrt((s.totalImatter- 20) / 20) + 1);
+    let pcoresLvl = Math.floor(Math.sqrt((s.totalPCores- 20) / 20) + 1);
+    let ultinumLvl = Math.floor(Math.sqrt((s.totalUlt- 20) / 20) + 1);
     let powerLvl = Math.floor(Math.sqrt((s.getShipPower() - 25) / 5) + 1);
     console.log(imatterLvl);
     console.log(pcoresLvl);

@@ -23,7 +23,9 @@ class NodeSA {
         this.damageMult = damageMult * (1.0 + (damageTrophy * 0.01));
         this.healthMult = healthMult * (1.0 + (healthTrophy * 0.01));
         this.hpLeft = 99999.0;
-        this.trophyPoints = trophyPoints(this);
+        if(!trophies) {
+            this.trophyPoints = trophyPoints(this);
+        }
         this.rule = rule;
         this.parent = null;
         this.minTrophy = 50;

@@ -12,12 +12,6 @@ const runWorker = (e) => {
     let p = new ArenaProblem(s);
     let pEngine = new Engine(p, e.max);
     let sol = pEngine.findSolution()[0];
-    // if (solutions[0].length > 0) {
-    //     listRules(solutions[0], true);
-    //     // listRules(solutions[1], false);
-    // } else {
-    //     console.log("There was no solution found");
-    // }
     let longPrint = true;
     let list = [];
     let w = sol[0].parent;

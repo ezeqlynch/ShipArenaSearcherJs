@@ -1,5 +1,6 @@
+window.running = false;
 const run = () => {
-    if(window.worker) {
+    if(window.running) {
         return;
     }
     window.worker = new Worker('worker.js');
@@ -45,11 +46,13 @@ const run = () => {
         weL, reL, huL, wiL, weM, reM, huM, wiM, weR, reR, huR, wiR, ref, shp, di, reg, lec, 
         dmgMult, hpMult, currUlt, currIm, trophies100, max}
     window.worker.postMessage(payload);
+    window.running = true;
     
     window.worker.onmessage = e=> {
         if (!e.data.state) {
             document.getElementById("open").innerHTML = `Current Open Nodes: ${0}`;
             putOnTable(e.data, false);
+            window.running = false;
         } else {
             document.getElementById("best").innerHTML = `Current Best ${e.data.state.bestStage}`;
             document.getElementById("open").innerHTML = `Current Open Nodes: ${e.data.state.openNodes}`;
@@ -346,7 +349,7 @@ const clearTable = () => {
 
 const terminateWorker = () => {
     window.worker.terminate();
-    console.log(window.worker);
+    window.running = false;
 }
 // Use like:
 

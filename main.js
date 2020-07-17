@@ -1,4 +1,7 @@
 const run = () => {
+    if(window.worker) {
+        return;
+    }
     window.worker = new Worker('worker.js');
 
     let orbBonus = +document.getElementById("orbBonus").value;
@@ -343,6 +346,7 @@ const clearTable = () => {
 
 const terminateWorker = () => {
     window.worker.terminate();
+    console.log(window.worker);
 }
 // Use like:
 

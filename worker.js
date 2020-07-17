@@ -81,15 +81,17 @@ const runWorker = (e) => {
 }
 
 self.addEventListener('message', e => {
-    importScripts('./models/boss.js');
-    importScripts('./models/formulas.js');
-    importScripts('./models/node.js');
-    importScripts('./models/ship.js');
-    importScripts('./rules/droneRule.js');
-    importScripts('./rules/shipRule.js');
-    importScripts('engine.js');
-    importScripts('fight.js');
-    importScripts('problem.js');
-    importScripts('queue.js');
+    
     runWorker(e.data);
-})
+});
+
+importScripts('./models/boss.js');
+importScripts('./models/formulas.js');
+importScripts('./models/node.js');
+importScripts('./models/ship.js');
+importScripts('./rules/droneRule.js');
+importScripts('./rules/shipRule.js');
+importScripts('engine.js');
+importScripts('fight.js');
+importScripts('problem.js');
+importScripts('queue.js');

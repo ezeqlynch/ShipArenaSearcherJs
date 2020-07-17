@@ -94,7 +94,7 @@ class Engine {
             postMessage({state: {
                 openNodes: this.getOpenNodesSize(),
                 bestStage: this.bests[this.bests.length - 1].challengeNumber,
-                bestDepths: this.bestDepths.size(),
+                bestDepths: this.bestDepths.size,
             }});
         }
 

@@ -45,6 +45,7 @@ const run = () => {
     
     worker.onmessage = e=> {
         if (!e.data.state) {
+            document.getElementById("open").innerHTML = `Current Open Nodes: ${0}`;
             putOnTable(e.data, false);
         } else {
             document.getElementById("best").innerHTML = `Current Best ${e.data.state.bestStage}`;
@@ -333,7 +334,10 @@ const trophies100 = (checkbox) => {
 }
 
 const clear = () => {
-    document.querySelectorAll(".remove").forEach(el => el.remove());
+    document.querySelectorAll(".removable").forEach(el => el.remove());
+    document.getElementById("best").innerHTML = `Current Best ${0}`;
+    document.getElementById("open").innerHTML = `Current Open Nodes: ${0}`;
+    document.getElementById("total").innerHTML = `Unique Nodes Checked: ${0}`;
 }
 
 // Use like:

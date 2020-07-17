@@ -10,7 +10,7 @@ const runWorker = (e) => {
     let root = s.clone();
     root.challengeNumber = "INIT";
     let p = new ArenaProblem(s);
-    let pEngine = new Engine(p, 750);
+    let pEngine = new Engine(p, e.max);
     let sol = pEngine.findSolution()[0];
     // if (solutions[0].length > 0) {
     //     listRules(solutions[0], true);

@@ -198,23 +198,23 @@ const getTotal = (n, mult) => {
 }
 
 const trophyPoints = s => {
-    let seriesLvl = Math.floor((s.challengeNumber - 1) / 5) + 1;
-    let imatterLvl = Math.floor(Math.pow((s.totalImatter - 10) / 5, 1 / 3)) + 1;
-    let pcoresLvl = Math.floor(Math.pow((s.totalPCores - 10) / 5, 1 / 3)) + 1;
-    let ultinumLvl = Math.floor(Math.pow((s.totalUlt - 10) / 5, 1 / 3)) + 1;
-    let powerLvl = Math.floor(Math.sqrt((s.getShipPower() - 25) / 5) + 1);
-    let expedLvl = Math.floor(Math.pow(s.expedPoints / 50, 1 / 3)) + 1;
-    let fuelLvl = Math.floor(s.fuelUpgrades / 10);
-    let labLvl = Math.floor(s.totalLab / 10) + 1;
+    const seriesLvl = Math.floor((s.challengeNumber - 1) / 5) + 1;
+    const imatterLvl = Math.floor(Math.pow((s.totalImatter - 10) / 5, 1 / 3)) + 1;
+    const pcoresLvl = Math.floor(Math.pow((s.totalPCores - 10) / 5, 1 / 3)) + 1;
+    const ultinumLvl = Math.floor(Math.pow((s.totalUlt - 10) / 5, 1 / 3)) + 1;
+    const powerLvl = Math.floor(Math.sqrt((s.getShipPower() - 25) / 5) + 1);
+    const expedLvl = Math.floor(Math.pow(s.expedPoints / 50, 1 / 3)) + 1;
+    const fuelLvl = Math.floor(s.fuelUpgrades / 10);
+    const labLvl = Math.floor(s.totalLab / 10) + 1;
     
-    let imatterTfy = getTotal(imatterLvl, 3);
-    let pcoresTfy = getTotal(pcoresLvl, 3);
-    let ultinumTfy = getTotal(ultinumLvl, 3);
-    let seriesTfy = getTotal(seriesLvl, 5);
-    let powerTfy = getTotal(powerLvl, 5);
-    let expedTfy = getTotal(expedLvl, 3);
-    let fuelTfy = getTotal(fuelLvl, 5);
-    let labTfy = getTotal(labLvl, 3);
+    const imatterTfy = getTotal(imatterLvl, 3);
+    const pcoresTfy = getTotal(pcoresLvl, 3);
+    const ultinumTfy = getTotal(ultinumLvl, 3);
+    const seriesTfy = getTotal(seriesLvl, 5);
+    const powerTfy = getTotal(powerLvl, 5);
+    const expedTfy = getTotal(expedLvl, 3);
+    const fuelTfy = getTotal(fuelLvl, 5);
+    const labTfy = getTotal(labLvl, 3);
     return imatterTfy + pcoresTfy + ultinumTfy + seriesTfy + powerTfy + expedTfy + fuelTfy + labTfy;
 }
 

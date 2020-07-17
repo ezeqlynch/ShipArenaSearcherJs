@@ -97,7 +97,7 @@ class Engine {
                 openNodes: this.getOpenNodesSize(),
                 bestStage: this.bests[this.bests.length - 1].challengeNumber,
                 bestDepths: this.bestDepths.size,
-                time: new Date() - this.date
+                time: new Date() - this.start
             }});
         }
 

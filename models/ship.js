@@ -53,5 +53,13 @@ class Ship {
         return "[[" + this.weapon + "],[" + this.reactor + "],[" + this.hull + "],[" + this.wing + "]]";
     }
 
+    toObject() {
+        return {
+            weapon: this.weapon,
+            reactor: this.reactor, 
+            hull: this.hull,
+            wing: this.wing
+        }
+    }
 
 }

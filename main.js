@@ -64,7 +64,7 @@ const run = () => {
 self.addEventListener('message', e => {
     console.log(e);
     if(!e.data.state) {
-        listRules(e.data[0], false);
+        putOnTable(e.data[0], false);
     } else {
         document.getElementById("best").innerHTML = e.data.state.bestStage;
         document.getElementById("open").innerHTML = e.data.state.openNodes;

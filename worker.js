@@ -82,7 +82,7 @@ const runWorker = (e) => {
         }
     }
     console.log(sb);
-    self.postMessage(truestList);
+    self.postMessage(truestList.map(e => e.toObject()));
 }
 
 self.addEventListener('message', e => {

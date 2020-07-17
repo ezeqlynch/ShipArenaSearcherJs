@@ -292,6 +292,18 @@ class NodeSA {
         this.challengeNumber++;
     }
 
+    toObject() {
+        return {
+            challengeNumber: this.challengeNumber,
+            rightShip: this.rightShip.toObject(),
+            leftShip: this.leftShip.toObject(),
+            middleShip: this.middleShip.toObject(),
+            drones: this.drones,
+            healthTrophy: this.healthTrophy,
+            damageTrophy: this.damageTrophy,
+        }
+    }
+
     toString() {
 
         return "Challenge: " + this.challengeNumber + "\n " + this.leftShip.toString() + "\n " + this.middleShip.toString() + "\n " + this.rightShip.toString() + "\nH: " + this.healthTrophy + " D:" + this.damageTrophy +

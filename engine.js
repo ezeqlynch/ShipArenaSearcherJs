@@ -86,7 +86,7 @@ class Engine {
             return;
         }
         this.explosionCounter++;
-        if (this.explosionCounter % 50000 == 0) {
+        if (this.explosionCounter % 500 == 0) {
             console.log(new Date());
             console.log("bestDepths = " + this.bestDepths.size);
             console.log("openNodes = " + this.getOpenNodesSize());
@@ -94,7 +94,7 @@ class Engine {
             postMessage({state: {
                 openNodes: this.getOpenNodesSize(),
                 bestStage: this.bests[this.bests.length - 1].challengeNumber,
-                date: new Date()
+                bestDepths: this.bestDepths.size(),
             }});
         }
 

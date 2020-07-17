@@ -45,14 +45,14 @@ const run = () => {
     worker.onmessage = e=> {
         console.log(e);
         if (!e.data.state) {
-            putOnTable(e.data[0], false);
+            putOnTable(e.data, false);
         } else {
-            document.getElementById("best").innerHTML = e.data.state.bestStage;
-            document.getElementById("open").innerHTML = e.data.state.openNodes;
-            document.getElementById("time").innerHTML = e.data.state.date;
+            document.getElementById("best").innerHTML = `Current Best ${e.data.state.bestStage}`;
+            document.getElementById("open").innerHTML = `Current Open Nodes: ${e.data.state.openNodes}`;
+            document.getElementById("total").innerHTML = `Unique Nodes Checked: ${e.data.state.bestDepths}`;
         }
     }
-    
+
     // let l = new Ship(weL, reL, huL, wiL);
     // let m = new Ship(weM, reM, huM, wiM);
     // let r = new Ship(weR, reR, huR, wiR);
@@ -71,19 +71,6 @@ const run = () => {
     //     console.log("There was no solution found");
     // }
 }
-
-self.addEventListener('message', e => {
-    console.log(e);
-    if(!e.data.state) {
-        putOnTable(e.data[0], false);
-    } else {
-        document.getElementById("best").innerHTML = e.data.state.bestStage;
-        document.getElementById("open").innerHTML = e.data.state.openNodes;
-        document.getElementById("time").innerHTML = e.data.state.date;
-    }
-});
-
-
 
 listRules = (sol, longPrint, root) => {
     let list = [];

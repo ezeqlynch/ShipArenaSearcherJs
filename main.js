@@ -1,6 +1,5 @@
-const worker = new Worker('worker.js');
 const run = () => {
-    // let worker = new Worker('worker.js');
+    window.worker = new Worker('worker.js');
 
     let orbBonus = +document.getElementById("orbBonus").value;
     let guildBonus = +document.getElementById("guildBonus").value;
@@ -42,9 +41,9 @@ const run = () => {
     let payload = {totalUlt, totalIm, stage, totalPCores, expedPoints, fuelUpgrades, totalLab, 
         weL, reL, huL, wiL, weM, reM, huM, wiM, weR, reR, huR, wiR, ref, shp, di, reg, lec, 
         dmgMult, hpMult, currUlt, currIm, trophies100, max}
-    worker.postMessage(payload);
+    window.worker.postMessage(payload);
     
-    worker.onmessage = e=> {
+    window.worker.onmessage = e=> {
         if (!e.data.state) {
             document.getElementById("open").innerHTML = `Current Open Nodes: ${0}`;
             putOnTable(e.data, false);
@@ -343,7 +342,7 @@ const clearTable = () => {
 }
 
 const terminateWorker = () => {
-    worker.terminate();
+    window.worker.terminate();
 }
 // Use like:
 

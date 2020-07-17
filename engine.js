@@ -42,7 +42,7 @@ class Engine {
     }
 
     findSolution() {
-        console.log(this.problem);
+        this.start = new Date();
         let root = this.problem.getInitialState();
         do {
             if (root.hpLeft <= 0) {
@@ -97,6 +97,7 @@ class Engine {
                 openNodes: this.getOpenNodesSize(),
                 bestStage: this.bests[this.bests.length - 1].challengeNumber,
                 bestDepths: this.bestDepths.size,
+                time: new Date() - this.date
             }});
         }
 

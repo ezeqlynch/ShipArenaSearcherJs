@@ -57,6 +57,7 @@ const run = () => {
             document.getElementById("best").innerHTML = `Current Best ${e.data.state.bestStage}`;
             document.getElementById("open").innerHTML = `Current Open Nodes: ${e.data.state.openNodes}`;
             document.getElementById("total").innerHTML = `Unique Nodes Checked: ${e.data.state.bestDepths}`;
+            document.getElementById("time").innerHTML = `Time ellapsed: ${e.data.state.time}ms`;
         }
     }
 

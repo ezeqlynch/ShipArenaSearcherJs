@@ -30,9 +30,46 @@ td {
 
 </style>
     <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'info')">Info</button>
         <button class="tablinks" onclick="openTab(event, 'input')">Data</button>
         <button id="resultsButton" class="tablinks" onclick="openTab(event, 'results')">Results</button>
-        <button onclick="clear()">Clear</button>
+        <button onclick="terminateWorker()">Stop</button>
+        <button onclick="clearTable()">Clear</button>
+    </div>
+    <div class="tabcontent" id="info">
+        <p>
+            Orb Bonus through Asc Health are the same (and in same order) as MultiCalc Arena Sheet
+        </p>
+        <p>
+            For Orb Bonus through Asc Health don't use percentages (if MC says 543% => input 5.43).
+        </p>
+        <p>
+            There are no checks for integrity of inputs, but the algorithm runs locally.
+        </p>
+        <p>
+            If you have 100/100 trophies, check the checkbox for a little faster calculation and no need to fill the last boxes.
+        </p>
+        <p>
+            The calculation is a heavy one, I don't know how slower computers will work. You can terminate the calculation if you so desire.
+        </p>
+        <p>
+            As there are millions of possible combinations and ramifications, the bigger the push is, the longer the algorithm becomes.
+        </p>
+        <p>
+            The least purchases possible, the faster the calculation will be, so if you have 100k ult laying around and can buy some upgrades that will definitely be bought, it can speed up the calc.
+        </p>
+        <p>
+            The algorithm is a Breadth First Search with each branch being an upgrade, so the least upgrades the better.
+        </p>
+        <p>
+            Open Nodes means the amount of nodes in the tree that the algorithm needs to check, and Unique Nodes the amount of nodes it has already checked.
+        </p>
+        <p>
+            The algorithm only buys hulls, middle and right weapons, and right wings, with left and middle hulls being >10 levels lower than right.
+        </p>
+        <p>
+            Only supported drones are the ones in the table.
+        </p>
     </div>
     <div class="tabcontent" id="results" style="display: none;">
         <br>
@@ -79,7 +116,7 @@ td {
 
         </table>
     </div>
-    <div class="tabcontent" id="input">
+    <div class="tabcontent" id="input" style="display: none;">
 
     <p>
         <input id='orbBonus' onkeyup="saveValue(this)"> Orb Bonus (with virtue applied)

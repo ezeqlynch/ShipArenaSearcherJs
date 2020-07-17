@@ -1,5 +1,6 @@
+const worker = new Worker('worker.js');
 const run = () => {
-    let worker = new Worker('worker.js');
+    // let worker = new Worker('worker.js');
 
     let orbBonus = +document.getElementById("orbBonus").value;
     let guildBonus = +document.getElementById("guildBonus").value;
@@ -53,6 +54,7 @@ const run = () => {
             document.getElementById("total").innerHTML = `Unique Nodes Checked: ${e.data.state.bestDepths}`;
         }
     }
+
 
     // let l = new Ship(weL, reL, huL, wiL);
     // let m = new Ship(weM, reM, huM, wiM);
@@ -333,13 +335,16 @@ const trophies100 = (checkbox) => {
     document.getElementById("totalUlt").disabled = checkbox.checked;
 }
 
-const clear = () => {
+const clearTable = () => {
     document.querySelectorAll(".removable").forEach(el => el.remove());
     document.getElementById("best").innerHTML = `Current Best ${0}`;
     document.getElementById("open").innerHTML = `Current Open Nodes: ${0}`;
     document.getElementById("total").innerHTML = `Unique Nodes Checked: ${0}`;
 }
 
+const terminateWorker = () => {
+    worker.terminate();
+}
 // Use like:
 
 document.getElementById("orbBonus").value = getSavedValue("orbBonus");

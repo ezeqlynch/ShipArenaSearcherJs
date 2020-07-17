@@ -41,7 +41,18 @@ const run = () => {
         weL, reL, huL, wiL, weM, reM, huM, wiM, weR, reR, huR, wiR, ref, shp, di, reg, lec, 
         dmgMult, hpMult, currUlt, currIm, trophies100}
     worker.postMessage(payload);
-
+    
+    worker.onmessage = e=> {
+        console.log(e);
+        if (!e.data.state) {
+            putOnTable(e.data[0], false);
+        } else {
+            document.getElementById("best").innerHTML = e.data.state.bestStage;
+            document.getElementById("open").innerHTML = e.data.state.openNodes;
+            document.getElementById("time").innerHTML = e.data.state.date;
+        }
+    }
+    
     // let l = new Ship(weL, reL, huL, wiL);
     // let m = new Ship(weM, reM, huM, wiM);
     // let r = new Ship(weR, reR, huR, wiR);
@@ -71,6 +82,8 @@ self.addEventListener('message', e => {
         document.getElementById("time").innerHTML = e.data.state.date;
     }
 });
+
+
 
 listRules = (sol, longPrint, root) => {
     let list = [];

@@ -87,10 +87,12 @@ class Engine {
         }
         this.explosionCounter++;
         if (this.explosionCounter % 500 == 0) {
-            console.log(new Date());
-            console.log("bestDepths = " + this.bestDepths.size);
-            console.log("openNodes = " + this.getOpenNodesSize());
-            console.log(this.bests[this.bests.length-1].toString());
+            if(this.explosionCounter % 50000 == 0) {    
+                console.log(new Date());
+                console.log("bestDepths = " + this.bestDepths.size);
+                console.log("openNodes = " + this.getOpenNodesSize());
+                console.log(this.bests[this.bests.length-1].toString());
+            }
             postMessage({state: {
                 openNodes: this.getOpenNodesSize(),
                 bestStage: this.bests[this.bests.length - 1].challengeNumber,

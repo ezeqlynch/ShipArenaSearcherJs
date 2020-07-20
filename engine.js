@@ -83,7 +83,7 @@ class Engine {
 
     explode(node) {
         if (node.challengeNumber >= this.maxChallenge) {
-            node = null;
+            //node = null;
             return;
         }
         this.explosionCounter++;

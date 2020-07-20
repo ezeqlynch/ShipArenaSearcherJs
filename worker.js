@@ -12,7 +12,7 @@ const runWorker = (e) => {
     let p = new ArenaProblem(s);
     let pEngine = new Engine(p, e.max);
     let sol = pEngine.findSolution()[0];
-    console.log(sol[0]);
+    console.log(sol);
     let longPrint = true;
     let list = [];
     let w = sol[0].parent;

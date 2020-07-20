@@ -133,7 +133,7 @@ class Engine {
             this.bests.push(node);
         } else if (node.challengeNumber > this.lowestHigh || (node.challengeNumber == this.lowestHigh && node.currUlt >= this.lowestHp)){
             this.bests.sort((a, b) => {
-                if(a != b) {
+                if(a.challengeNumber != b.challengeNumber) {
                     return a.challengeNumber - b.challengeNumber;
                 } else {
                     return a.currUlt - b.currUlt;

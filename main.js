@@ -47,17 +47,20 @@ const run = () => {
         dmgMult, hpMult, currUlt, currIm, trophies100, max}
     window.worker.postMessage(payload);
     window.running = true;
-    
+    let best = document.getElementById("best");
+    let open = document.getElementById("open");
+    let total = document.getElementById("total");
+    let time = document.getElementById("time");
     window.worker.onmessage = e=> {
         if (!e.data.state) {
             document.getElementById("open").innerHTML = `Current Open Nodes: ${0}`;
             putOnTable(e.data, false);
             window.running = false;
         } else {
-            document.getElementById("best").innerHTML = `Current Best ${e.data.state.bestStage}`;
-            document.getElementById("open").innerHTML = `Current Open Nodes: ${e.data.state.openNodes}`;
-            document.getElementById("total").innerHTML = `Unique Nodes Checked: ${e.data.state.bestDepths}`;
-            document.getElementById("time").innerHTML = `Time ellapsed: ${e.data.state.time}ms`;
+            best.innerHTML = `Current Best ${e.data.state.bestStage}`;
+            open.innerHTML = `Current Open Nodes: ${e.data.state.openNodes}`;
+            total.innerHTML = `Unique Nodes Checked: ${e.data.state.bestDepths}`;
+            time.innerHTML = `Time ellapsed: ${e.data.state.time}ms`;
         }
     }
 

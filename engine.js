@@ -11,7 +11,7 @@ class Engine {
         this.bestDepths = new Set();
         this.explosionCounter = 0;
         this.bests = [];
-        this.bestsFive = [];
+        // this.bestsFive = [];
         this.openNodes = createQueue(200, []);
         this.maxChallenge = maxChallenge;
         this.lowestHp = 0;
@@ -75,14 +75,15 @@ class Engine {
             this.explode(currentNode);
         }
         this.bests.reverse();
-        this.bestsFive.reverse();
+        // this.bestsFive.reverse();
         console.log(this.explosionCounter);
-        return [this.bests, this.bestsFive];
+        return [this.bests];
 
     }
 
     explode(node) {
         if (node.challengeNumber >= this.maxChallenge) {
+            node = null;
             return;
         }
         this.explosionCounter++;
@@ -144,25 +145,25 @@ class Engine {
                 this.lowestHp = this.bests[1].currUlt;
             }
         }
-        if(node.challengeNumber % 5 == 0) {
-            if(this.bestsFive.length < 100) {
-                this.bestsFive.push(node);
-            } else if (node.challengeNumber > this.lowestHighFive || (node.challengeNumber == this.lowestHighFive && node.currUlt >= this.lowestHpFive)){
-                this.bestsFive.sort((a, b) => {
-                    if (a != b) {
-                        return a.challengeNumber - b.challengeNumber;
-                    } else {
-                        return a.currUlt - b.currUlt;
-                    }
-                })
-                if (!this.bestsFive.some(n => n.equals(node))) {
-                    this.bestsFive[0] = node;
-                    this.lowestHighFive = this.bestsFive[1].challengeNumber;
-                    this.lowestHpFive = this.bestsFive[1].currUlt;
+        // if(node.challengeNumber % 5 == 0) {
+        //     if(this.bestsFive.length < 100) {
+        //         this.bestsFive.push(node);
+        //     } else if (node.challengeNumber > this.lowestHighFive || (node.challengeNumber == this.lowestHighFive && node.currUlt >= this.lowestHpFive)){
+        //         this.bestsFive.sort((a, b) => {
+        //             if (a != b) {
+        //                 return a.challengeNumber - b.challengeNumber;
+        //             } else {
+        //                 return a.currUlt - b.currUlt;
+        //             }
+        //         })
+        //         if (!this.bestsFive.some(n => n.equals(node))) {
+        //             this.bestsFive[0] = node;
+        //             this.lowestHighFive = this.bestsFive[1].challengeNumber;
+        //             this.lowestHpFive = this.bestsFive[1].currUlt;
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
     }
 
     shuffle = arr => {

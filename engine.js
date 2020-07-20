@@ -66,7 +66,7 @@ class Engine {
 
         while (!this.openNodesIsEmpty()){
             let currentNode = this.getNextNode();
-            if(this.openNodes.length() > 1000000/* || (openNodes.size() > 800000 && bestDepths.size() > 10000000) || bestDepths.size() > 10000000*/) {
+            if(this.openNodes.length() > 10000000/* || (openNodes.size() > 800000 && bestDepths.size() > 10000000) || bestDepths.size() > 10000000*/) {
                 this.bests.reverse();
                 this.stepOnOpenNodes(this.bests);
                 this.bestDepths.clear();

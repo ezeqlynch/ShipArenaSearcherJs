@@ -59,7 +59,7 @@ class NodeSA {
                         return ultCost[this.leftShip.reactor + 1] <= this.currUlt && imatterCost[this.leftShip.reactor + 1] <= this.currImatter;
                     case 2:
                         return (ultCost[this.leftShip.hull + 1] <= this.currUlt && imatterCost[this.leftShip.hull + 1] <= this.currImatter)
-                            && this.leftShip.hull + 10 < this.rightShip.hull;
+                            && this.leftShip.hull < this.rightShip.hull;
                     case 3:
                         return (ultCost[this.leftShip.wing + 1] <= this.currUlt && imatterCost[this.leftShip.wing + 1] <= this.currImatter);
                 }
@@ -74,7 +74,7 @@ class NodeSA {
                     case 2:
                         return (ultCost[this.middleShip.hull + 1] <= this.currUlt && imatterCost[this.middleShip.hull + 1] <= this.currImatter)
                             //                                ;
-                            && this.middleShip.hull + 10 < this.rightShip.hull
+                            && this.middleShip.hull < this.rightShip.hull
                     case 3:
                         return ultCost[this.middleShip.wing + 1] <= this.currUlt && imatterCost[this.middleShip.wing + 1] <= this.currImatter;
                 }

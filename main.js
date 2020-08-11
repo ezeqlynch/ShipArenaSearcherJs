@@ -60,7 +60,7 @@ const run = () => {
             best.innerHTML = `Current Best ${e.data.state.bestStage}`;
             open.innerHTML = `Current Open Nodes: ${e.data.state.openNodes}`;
             total.innerHTML = `Unique Nodes Checked: ${e.data.state.bestDepths}`;
-            time.innerHTML = `Time ellapsed: ${e.data.state.time}ms`;
+            time.innerHTML = `Time elapsed: ${e.data.state.time}ms`;
         }
     }
 

@@ -12,6 +12,7 @@ const runWorker = (e) => {
     let p = new ArenaProblem(s);
     let pEngine = new Engine(p, e.max);
     let sols = pEngine.findSolution();
+    console.log(sols);
     let truestSols = [];
     sols.forEach(sol => {
 

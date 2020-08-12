@@ -11,74 +11,80 @@ const runWorker = (e) => {
     root.challengeNumber = "INIT";
     let p = new ArenaProblem(s);
     let pEngine = new Engine(p, e.max);
-    let sol = pEngine.findSolution()[0];
-    console.log(sol);
-    let longPrint = true;
-    let list = [];
-    let w = sol[0].parent;
-    if (w == null) {
-        console.log("There was nothing to be found.");
-        return;
-    }
-    list.push(w);
-    while (w.parent != null) {
+    let sols = pEngine.findSolution();
+    let truestSols = [];
+    sols.forEach(sol => {
 
+        console.log(sol);
+        let longPrint = true;
+        let list = [];
+        let w = sol[0].parent;
+        if (w == null) {
+            console.log("There was nothing to be found.");
+            return;
+        }
         list.push(w);
-        w = w.parent;
-    }
-    list.push(w);
-    list.reverse();
-    console.log(list);
-    let trueList = [];
-    let currCh = 0;
-    for (let i = 0; i < list.length; i++) {
-        const r = list[i];
-        if (currCh != r.challengeNumber) {
-            trueList.push(r);
+        while (w.parent != null) {
+
+            list.push(w);
+            w = w.parent;
         }
-        currCh = r.challengeNumber;
-    }
-    console.log(trueList);
-    let currentChallenge = trueList[0].challengeNumber;
-    let sb = '';
-    sb = sb.concat(trueList[0].toJson());
-    sb = sb.concat('\t');
-    if (longPrint) {
-        console.log(trueList[0].toString());
-        console.log("Beat up to challenge " + currentChallenge);
-    }
-    let prev = trueList[0];
-    let truestList = [root];
-    for (let i = 0; i < trueList.length; i++) {
-        const r = trueList[i];
-        if (prev.equalsEnd(r)) {
-            prev = r;
-            continue;
-        }
-        if (r.challengeNumber > currentChallenge) {
-            sb = sb.concat(r.toJson());
-            sb = sb.concat('\t');
-            truestList.push(r);
-            currentChallenge = r.challengeNumber;
-            if (longPrint) {
-                console.log(r.toString());
-                console.log("Beat up to challenge " + currentChallenge);
+        list.push(w);
+        list.reverse();
+        console.log(list);
+        let trueList = [];
+        let currCh = 0;
+        for (let i = 0; i < list.length; i++) {
+            const r = list[i];
+            if (currCh != r.challengeNumber) {
+                trueList.push(r);
             }
-            prev = r;
+            currCh = r.challengeNumber;
         }
-    }
-    if (currentChallenge != trueList[trueList.length - 1].challengeNumber) {
-        sb = sb.concat(trueList[trueList.length - 1].toJson());
+        console.log(trueList);
+        let currentChallenge = trueList[0].challengeNumber;
+        let sb = '';
+        sb = sb.concat(trueList[0].toJson());
         sb = sb.concat('\t');
-        truestList.push(trueList[trueList.length - 1]);
         if (longPrint) {
-            console.log(trueList[trueList.length - 1].toString());
-            console.log("Beat up to challenge " + trueList[trueList.length - 1].challengeNumber);
+            console.log(trueList[0].toString());
+            console.log("Beat up to challenge " + currentChallenge);
         }
-    }
-    console.log(sb);
-    truestList = truestList.map(e => e.toObject());
-    self.postMessage(truestList);
+        let prev = trueList[0];
+        let truestList = [root];
+        for (let i = 0; i < trueList.length; i++) {
+            const r = trueList[i];
+            if (prev.equalsEnd(r)) {
+                prev = r;
+                continue;
+            }
+            if (r.challengeNumber > currentChallenge) {
+                sb = sb.concat(r.toJson());
+                sb = sb.concat('\t');
+                truestList.push(r);
+                currentChallenge = r.challengeNumber;
+                if (longPrint) {
+                    console.log(r.toString());
+                    console.log("Beat up to challenge " + currentChallenge);
+                }
+                prev = r;
+            }
+        }
+        if (currentChallenge != trueList[trueList.length - 1].challengeNumber) {
+            sb = sb.concat(trueList[trueList.length - 1].toJson());
+            sb = sb.concat('\t');
+            truestList.push(trueList[trueList.length - 1]);
+            if (longPrint) {
+                console.log(trueList[trueList.length - 1].toString());
+                console.log("Beat up to challenge " + trueList[trueList.length - 1].challengeNumber);
+            }
+        }
+        console.log(sb);
+        truestList = truestList.map(e => e.toObject());
+        truestSols.push(truestList);
+    });
+
+    self.postMessage(truestSols);
 }
 
 self.addEventListener('message', e => {

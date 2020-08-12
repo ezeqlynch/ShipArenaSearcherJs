@@ -1,4 +1,6 @@
 window.running = false;
+window.sols = [];
+window.index = 0;
 const run = () => {
     if(window.running) {
         return;
@@ -54,7 +56,8 @@ const run = () => {
     window.worker.onmessage = e=> {
         if (!e.data.state) {
             document.getElementById("open").innerHTML = `Current Open Nodes: ${0}`;
-            putOnTable(e.data, false);
+            window.sols = e.data;
+            putOnTable(e.data[0], false);
             window.running = false;
         } else {
             best.innerHTML = `Current Best ${e.data.state.bestStage}`;
@@ -356,6 +359,16 @@ const terminateWorker = () => {
     window.running = false;
 }
 // Use like:
+
+const changeBuild = next => {
+    if(next && window.index + 1 < window.sols.length) {
+        clearTable();
+        putOnTable(window.sols[++window.index]);
+    } else if(!next && window.index > 0) {
+        clearTable();
+        putOnTable(window.sols[--window.index]);
+    }
+}
 
 document.getElementById("orbBonus").value = getSavedValue("orbBonus");
 document.getElementById("guildBonus").value = getSavedValue("guildBonus");

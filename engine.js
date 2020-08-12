@@ -77,7 +77,7 @@ class Engine {
         this.bests.reverse();
         // this.bestsFive.reverse();
         console.log(this.explosionCounter);
-        return [this.bests];
+        return this.bests;
 
     }
 

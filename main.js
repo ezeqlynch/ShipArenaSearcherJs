@@ -53,10 +53,13 @@ const run = () => {
     let open = document.getElementById("open");
     let total = document.getElementById("total");
     let time = document.getElementById("time");
+    let buildIndex = document.getElementById("buildIndex");
     window.worker.onmessage = e=> {
         if (!e.data.state) {
-            document.getElementById("open").innerHTML = `Current Open Nodes: ${0}`;
-            window.sols = e.data;
+            open.innerHTML = `Current Open Nodes: ${0}`;
+            window.sols = e.data.filter((v, i, a) => a.findIndex(t => (JSON.stringify(t) === JSON.stringify(v))) === i);
+            buildIndex.innerHTML = `Build 1/${window.sols.length}`;
+            window.index = 0;
             putOnTable(e.data[0], false);
             window.running = false;
         } else {
@@ -160,6 +163,8 @@ const green = "background-color: #93c47d;";
 
 // yes, it is ugly
 putOnTable = (list) => {
+    clearTable();
+
     let prevWeL, prevReL, prevHuL, prevWiL, 
         prevWeM, prevReM, prevHuM, prevWiM, 
         prevWeR, prevReR, prevHuR, prevWiR, 
@@ -307,6 +312,7 @@ putOnTable = (list) => {
         document.getElementById("damageTrophy").appendChild(dmg);
     }
 
+    document.getElementById("ultLeft").innerHTML = `${list[list.length-1].currUlt} ult left`;
     document.getElementById("resultsButton").click();
 }
 
@@ -360,14 +366,27 @@ const terminateWorker = () => {
 }
 // Use like:
 
+let buildIndex = document.getElementById("buildIndex");
 const changeBuild = next => {
     if(next && window.index + 1 < window.sols.length) {
-        clearTable();
         putOnTable(window.sols[++window.index]);
     } else if(!next && window.index > 0) {
-        clearTable();
         putOnTable(window.sols[--window.index]);
     }
+    buildIndex.innerHTML = `Build ${window.index+1}/${window.sols.length}`;
+}
+
+const checkEquality = (b1, b2) => {
+    if(b1.length != b2.length)
+        return false;
+    for (let i = 0; i < b1.length; i++) {
+        const element1 = b1[i];
+        const element2 = b2[i];
+        if(JSON.stringify(b1) != JSON.stringify(b2)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 document.getElementById("orbBonus").value = getSavedValue("orbBonus");

@@ -301,6 +301,7 @@ class NodeSA {
             drones: this.drones,
             healthTrophy: this.healthTrophy,
             damageTrophy: this.damageTrophy,
+            currUlt: this.currUlt,
         }
     }
 

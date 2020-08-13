@@ -12,16 +12,15 @@ const runWorker = (e) => {
     let p = new ArenaProblem(s);
     let pEngine = new Engine(p, e.max);
     let sols = pEngine.findSolution();
-    console.log(sols);
     let truestSols = [];
     sols.forEach(sol => {
 
-        console.log(sol);
+        //console.log(sol);
         let longPrint = true;
         let list = [];
-        let w = sol[0].parent;
+        let w = sol.parent;
         if (w == null) {
-            console.log("There was nothing to be found.");
+            //console.log("There was nothing to be found.");
             return;
         }
         list.push(w);
@@ -32,7 +31,7 @@ const runWorker = (e) => {
         }
         list.push(w);
         list.reverse();
-        console.log(list);
+        //console.log(list);
         let trueList = [];
         let currCh = 0;
         for (let i = 0; i < list.length; i++) {
@@ -42,14 +41,14 @@ const runWorker = (e) => {
             }
             currCh = r.challengeNumber;
         }
-        console.log(trueList);
+        //console.log(trueList);
         let currentChallenge = trueList[0].challengeNumber;
         let sb = '';
         sb = sb.concat(trueList[0].toJson());
         sb = sb.concat('\t');
         if (longPrint) {
-            console.log(trueList[0].toString());
-            console.log("Beat up to challenge " + currentChallenge);
+            //console.log(trueList[0].toString());
+            //console.log("Beat up to challenge " + currentChallenge);
         }
         let prev = trueList[0];
         let truestList = [root];
@@ -65,8 +64,8 @@ const runWorker = (e) => {
                 truestList.push(r);
                 currentChallenge = r.challengeNumber;
                 if (longPrint) {
-                    console.log(r.toString());
-                    console.log("Beat up to challenge " + currentChallenge);
+                    //console.log(r.toString());
+                    //console.log("Beat up to challenge " + currentChallenge);
                 }
                 prev = r;
             }
@@ -76,15 +75,19 @@ const runWorker = (e) => {
             sb = sb.concat('\t');
             truestList.push(trueList[trueList.length - 1]);
             if (longPrint) {
-                console.log(trueList[trueList.length - 1].toString());
-                console.log("Beat up to challenge " + trueList[trueList.length - 1].challengeNumber);
+                //console.log(trueList[trueList.length - 1].toString());
+                //console.log("Beat up to challenge " + trueList[trueList.length - 1].challengeNumber);
             }
         }
-        console.log(sb);
+        //console.log(sb);
         truestList = truestList.map(e => e.toObject());
         truestSols.push(truestList);
     });
-
+    truestSols.sort((a, b) => {
+        if(b[b.length-1].challengeNumber == a[a.length - 1].challengeNumber)
+            return b[b.length - 1].currUlt - a[a.length - 1].currUlt;
+        return b[b.length - 1].challengeNumber - a[a.length - 1].challengeNumber;
+    })
     self.postMessage(truestSols);
 }
 

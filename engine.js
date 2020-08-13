@@ -114,6 +114,7 @@ class Engine {
 
 
         let rl = this.problem.getRules(node);
+        let ok = 0;
         for (let i = 0; i < rl.length; i++) {
             const rule = rl[i];
             let newState = rule.applyToState(node);
@@ -121,14 +122,17 @@ class Engine {
                 continue;
             }
 //            rule.postApplyToState(newState);
-            this.updateBestCosts(newState);
+            this.bestDepths.add(newState.toByteArray());
             newState.setParent(node);
             this.addToOpenNodes(newState);
+            ok++;
+        }
+        if(ok == 0) {
+            this.updateBestCosts(node);
         }
     }
 
     updateBestCosts(node){
-        this.bestDepths.add(node.toByteArray());
         if (this.bests.length < 100) {
             this.bests.push(node);
         } else if (node.challengeNumber > this.lowestHigh || (node.challengeNumber == this.lowestHigh && node.currUlt >= this.lowestHp)){

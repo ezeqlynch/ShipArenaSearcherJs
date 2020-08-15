@@ -93,6 +93,10 @@ class Engine {
                 console.log("bestDepths = " + this.bestDepths.size);
                 console.log("openNodes = " + this.getOpenNodesSize());
                 console.log(this.bests[this.bests.length-1].toString());
+                if(this.bestDepths.size > 16000000) { 
+                    this.bestDepths.clear();
+                }
+                
             }
             postMessage({state: {
                 openNodes: this.getOpenNodesSize(),

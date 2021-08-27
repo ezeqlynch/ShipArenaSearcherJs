@@ -2,7 +2,7 @@ class NodeSA {
 
     constructor(totalUlt, totalImatter, challengeNumber, totalPCores, leftShip, middleShip,
         rightShip, drones, healthTrophy, damageTrophy, damageMult, healthMult, currUlt, currImatter, rule,
-        expedPoints, fuelUpgrades, totalLab, trophies) {
+        expedPoints, fuelUpgrades, totalLab, trophies, depth) {
         this.totalUlt = totalUlt;
         this.totalImatter = totalImatter;
         this.currUlt = currUlt;
@@ -30,11 +30,16 @@ class NodeSA {
         this.parent = null;
         this.minTrophy = 50;
         this.trophies = trophies;
+        this.depth = depth;
     }
 
 
     setParent = p => {
         this.parent = p;
+    }
+
+    upDepth = () => {
+        this.depth++;
     }
 
     calcTrophyPoints() {
@@ -67,8 +72,7 @@ class NodeSA {
                 switch (part) {
                     case 0:
                         return (ultCost[this.middleShip.weapon + 1] <= this.currUlt && imatterCost[this.middleShip.weapon + 1] <= this.currImatter)
-                            //                                && middleShip.weapon < 30;
-                            ;
+                                                           && this.middleShip.weapon < 55;
                     case 1:
                         return ultCost[this.middleShip.reactor + 1] <= this.currUlt && imatterCost[this.middleShip.reactor + 1] <= this.currImatter;
                     case 2:
@@ -81,15 +85,17 @@ class NodeSA {
             case 2:
                 switch (part) {
                     case 0:
-                        return ultCost[this.rightShip.weapon + 1] < this.currUlt && imatterCost[this.rightShip.weapon + 1] < this.currImatter;
+                        return ultCost[this.rightShip.weapon + 1] < this.currUlt && imatterCost[this.rightShip.weapon + 1] < this.currImatter && 
+                            this.rightShip.weapon < 122;
                     case 1:
                         return ultCost[this.rightShip.reactor + 1] < this.currUlt && imatterCost[this.rightShip.reactor + 1] < this.currImatter;
                     case 2:
-                        return ultCost[this.rightShip.hull + 1] < this.currUlt && imatterCost[this.rightShip.hull + 1] < this.currImatter;
+                        return ultCost[this.rightShip.hull + 1] < this.currUlt && imatterCost[this.rightShip.hull + 1] < this.currImatter &&
+                            this.rightShip.hull < 122;
                     case 3:
-                        return (ultCost[this.rightShip.wing + 1] < this.currUlt && imatterCost[this.rightShip.wing + 1] < this.currImatter)
-                            ;
-                    //                                && rightShip.weapon > rightShip.wing;
+                        return (ultCost[this.rightShip.wing + 1] < this.currUlt && imatterCost[this.rightShip.wing + 1] < this.currImatter) &&
+                            this.rightShip.wing < 150;
+                            
                 }
         }
         return false;
@@ -177,7 +183,7 @@ class NodeSA {
     clone() {
         return new NodeSA(this.totalUlt, this.totalImatter, this.challengeNumber, this.totalPCores, this.leftShip.clone(), this.middleShip.clone(),
             this.rightShip.clone(), [...this.drones], this.healthTrophy, this.damageTrophy, this.initDamageMult, this.initHealthMult, this.currUlt, this.currImatter, this.rule,
-            this.expedPoints, this.fuelUpgrades, this.totalLab, this.trophies);
+            this.expedPoints, this.fuelUpgrades, this.totalLab, this.trophies, this.depth);
     }
 
     setHpLeft() {
@@ -337,5 +343,22 @@ ${this.drones[2].toString(2).padStart(5, '0')}\
 ${this.drones[3].toString(2).padStart(5, '0')}\
 ${this.drones[4].toString(2).padStart(5, '0')}`;
         return BigInt(bi);
+    }
+
+    toByteArrayParams(mw, rw, lh, mh, rh, rwi) {
+        let bi = `0b\
+${(this.middleShip.weapon+mw).toString(2).padStart(8, '0')}\
+${(this.rightShip.weapon+rw).toString(2).padStart(8, '0')}\
+${(this.leftShip.hull+lh).toString(2).padStart(8, '0')}\
+${(this.middleShip.hull+mh).toString(2).padStart(8, '0')}\
+${(this.rightShip.hull+rh).toString(2).padStart(8, '0')}\
+${(this.rightShip.wing+rwi).toString(2).padStart(8, '0')}\
+${this.challengeNumber.toString(2).padStart(10, '0')}\
+${this.drones[0].toString(2).padStart(5, '0')}\
+${this.drones[1].toString(2).padStart(5, '0')}\
+${this.drones[2].toString(2).padStart(5, '0')}\
+${this.drones[3].toString(2).padStart(5, '0')}\
+${this.drones[4].toString(2).padStart(5, '0')}`;
+            return BigInt(bi);
     }
 }

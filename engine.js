@@ -18,6 +18,9 @@ class Engine {
         this.lowestHpFive = 0;
         this.lowestHigh = 1;
         this.lowestHighFive = 1;
+        this.clear = false;
+        this.depths = {};
+        this.stages = {};
     }
 
     getNextNode() {
@@ -66,13 +69,23 @@ class Engine {
 
         while (!this.openNodesIsEmpty()){
             let currentNode = this.getNextNode();
-            if(this.openNodes.length() > 10000000/* || (openNodes.size() > 800000 && bestDepths.size() > 10000000) || bestDepths.size() > 10000000*/) {
-                this.bests.reverse();
-                this.stepOnOpenNodes(this.bests);
+            if(this.openNodes.length() > 100000000 && !this.clear/* || (openNodes.size() > 800000 && bestDepths.size() > 10000000) || bestDepths.size() > 10000000*/) {
+                // this.bests.reverse();
+                // this.stepOnOpenNodes(this.bests);
                 this.bestDepths.clear();
-                currentNode = this.bests[0];
+                this.clear = true;
+                // currentNode = this.bests[0];
             }
             this.explode(currentNode);
+            this.depths[currentNode.depth]--;
+            this.stages[currentNode.challengeNumber]--;
+            if(this.depths[currentNode.depth] == 0) {
+                delete this.depths[currentNode.depth];
+                this.bestDepths.clear();
+            }
+            if(this.stages[currentNode.challengeNumber] == 0) {
+                delete this.stages[currentNode.challengeNumber];
+            }
         }
         this.bests.reverse();
         // this.bestsFive.reverse();
@@ -96,7 +109,8 @@ class Engine {
                 if(this.bestDepths.size > 16000000) { 
                     this.bestDepths.clear();
                 }
-                
+                console.log(this.depths);
+                console.log(this.stages);
             }
             postMessage({state: {
                 openNodes: this.getOpenNodesSize(),
@@ -111,11 +125,11 @@ class Engine {
             while (nn.doTrophies() && nn.challengeNumber < this.maxChallenge) {
                 nn.upChall();
                 nn.setParent(node);
+                // this.bestDepths.add(nn.toByteArray());
                 node = nn;
                 nn = node.clone();
             }
         }
-
 
         let rl = this.problem.getRules(node);
         let ok = 0;
@@ -125,20 +139,44 @@ class Engine {
             if (this.bestDepths.has(newState.toByteArray())) {
                 continue;
             }
+            newState.upDepth();
+            if(!this.depths[newState.depth]) {
+                this.depths[newState.depth] = 1;
+            } else {
+                this.depths[newState.depth]++;
+            }
+            if(!this.stages[newState.challengeNumber]) {
+                this.stages[newState.challengeNumber] = 1;
+            } else {
+                this.stages[newState.challengeNumber]++;
+            }
 //            rule.postApplyToState(newState);
             this.bestDepths.add(newState.toByteArray());
             newState.setParent(node);
             this.addToOpenNodes(newState);
             ok++;
+            if(newState.challengeNumber > 696)
+                console.log(newState.toByteArray().toString(2));
         }
-        if(ok == 0) {
+        // if(ok == 0) {
             this.updateBestCosts(node);
-        }
+        // }
     }
 
+
+
     updateBestCosts(node){
+        if(node.challengeNumber > 697) 
+            console.log(`${this.bests.length} - ${node.challengeNumber} > ${this.lowestHigh} || (${node.challengeNumber} == ${this.lowestHigh} && ${node.currUlt} >= ${this.lowestHp})`);
         if (this.bests.length < 100) {
             this.bests.push(node);
+            this.bests.sort((a, b) => {
+                if(a.challengeNumber != b.challengeNumber) {
+                    return a.challengeNumber - b.challengeNumber;
+                } else {
+                    return a.currUlt - b.currUlt;
+                }
+            });
         } else if (node.challengeNumber > this.lowestHigh || (node.challengeNumber == this.lowestHigh && node.currUlt >= this.lowestHp)){
             this.bests.sort((a, b) => {
                 if(a.challengeNumber != b.challengeNumber) {

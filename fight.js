@@ -2,7 +2,9 @@
 
 const fight = (state) => {
     let b = new Boss(state.challengeNumber + 1);
-
+    if(state.challengeNumber >= 750) {
+        return 99999999;
+    }
     //[ref, shpen, deinc, regen, leech]
     let drones = state.drones;
     let armorPen = 1.0 + shieldPenDrone[drones[1]];

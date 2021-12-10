@@ -43,7 +43,7 @@ const run = () => {
     let di = +document.getElementById("di").value;
     let reg = +document.getElementById("reg").value;
     let lec = +document.getElementById("lec").value;
-    let max = Math.min(+document.getElementById("max").value, 750);
+    let max = Math.min(+document.getElementById("max").value, 751);
     let payload = {totalUlt, totalIm, stage, totalPCores, expedPoints, fuelUpgrades, totalLab, 
         weL, reL, huL, wiL, weM, reM, huM, wiM, weR, reR, huR, wiR, ref, shp, di, reg, lec, 
         dmgMult, hpMult, currUlt, currIm, trophies100, max}

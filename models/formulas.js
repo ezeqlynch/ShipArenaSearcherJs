@@ -75,7 +75,7 @@ const calcDeadlyIncDrone = () => {
 const calcBossHp = () => {
     let hp = [];
     hp[0] = 0.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         hp[i] = Math.floor((60 + 20 * (i - 1 + Math.max(0, i - 500))) * (1 + Math.floor((i - 1) / 5) / 20));
     }
     return hp;
@@ -85,7 +85,7 @@ const calcBossAttack = () => {
     //=(10+2.5*(index-1+max(0,index-500)))*(1+ROUNDDOWN((index-1)/5)/20)
     let arr = [];
     arr[0] = 0.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         arr[i] = ((10 + 2.5 * (i - 1 + Math.max(0, i - 500))) * (1 + Math.floor((i - 1) / 5) / 20));
     }
     return arr;
@@ -95,7 +95,7 @@ const calcBossShield = () => {
     //=(0+10*(index-1+max(0,index-500)))*(1+ROUNDDOWN((index-1)/5,0)/20)
     let arr = [];
     arr[0] = 0.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         arr[i] = ((10 * (i - 1 + Math.max(0, i - 500))) * (1 + Math.floor((i - 1) / 5) / 20));
     }
     return arr;
@@ -105,7 +105,7 @@ const calcBossSpeed = () => {
     //=(10+0.8*(A5-1+max(0,A5-500)))*(1+ROUNDDOWN((A5-1)/5)/20)
     let arr = [];
     arr[0] = 0.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         arr[i] = ((10 + 0.8 * (i - 1 + Math.max(0, i - 500))) * (1 + Math.floor((i - 1) / 5) / 20));
     }
     return arr;
@@ -115,7 +115,7 @@ const calcBossUltinum = () => {
     //=A13*10*IF(MOD(A13,5)=0,2,1)
     let arr = [];
     arr[0] = 0.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         arr[i] = i * 10.0 * (i % 5 == 0 ? 2.0 : 1.0);
     }
     return arr;
@@ -124,7 +124,7 @@ const calcBossUltinum = () => {
 const calcBossImatter = () => {
     let arr = [];
     arr[0] = 0.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         arr[i] = i * 15.0 * (i % 5 == 0 ? 2.0 : 1.0);
     }
     return arr;
@@ -133,7 +133,7 @@ const calcBossImatter = () => {
 const calcBossAp = () => {
     let arr = [];
     arr[0] = 0.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         arr[i] = i * 20.0 * (i % 5 == 0 ? 2.0 : 1.0);
     }
     return arr;
@@ -142,7 +142,7 @@ const calcBossAp = () => {
 const calcPower = () => {
     let power = [];
     power[0] = 0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         power[i] = power[i - 1] + 20 + Math.floor(i / 5.0) * 2 + (i % 5 == 0 ? (i - 1) * 2 : 0);
     }
     return power;
@@ -153,7 +153,7 @@ const calcPower = () => {
 const calcSpeed = () => {
     let speed = [];
     speed[0] = 10.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         //            =(10+0.8*L23)*(1+ROUNDDOWN(L23/5,0)/20)
         //            speed[i] = (0.81 + 0.04 * Math.floor(i/5.0)) * i - (i % 5) / 100.0;
         speed[i] = (10 + 0.8 * i) * (1 + Math.floor(i / 5.0) / 20.0);
@@ -164,7 +164,7 @@ const calcSpeed = () => {
 const calcDamage = () => {
     let damage = [];
     damage[0] = 10.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         damage[i] = damage[i - 1] + 2.5 + Math.floor(i / 5.0) / 8.0 + ((i % 5 == 0) ? 0.375 + i * 0.625 / 5.0 : 0.0);
     }
     return damage;
@@ -173,7 +173,7 @@ const calcDamage = () => {
 const calcArmor = () => {
     let armor = [];
     armor[0] = 0.0;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         armor[i] = armor[i - 1] + 10 + Math.floor(i / 5.0) / 2.0 + ((i % 5 == 0) ? i * 1.0 / 2.0 - 0.5 : 0.0);
     }
     return armor;
@@ -182,7 +182,7 @@ const calcArmor = () => {
 const calcHp = () => {
     let hp = [];
     hp[0] = 60;
-    for (let i = 1; i < 750; i++) {
+    for (let i = 1; i <= 750; i++) {
         hp[i] = hp[i - 1] + 20 + (i % 5 == 0 ? 2 + i * 6.0 / 5.0 : Math.floor(i / 5.0));
     }
     return hp;

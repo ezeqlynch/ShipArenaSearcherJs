@@ -66,7 +66,7 @@ class Engine {
         this.openNodes = createQueue(200, []);
         this.addToOpenNodes(root);
         this.bests.push(root);
-
+        let a = 0;
         while (!this.openNodesIsEmpty()){
             let currentNode = this.getNextNode();
             if(this.openNodes.length() > 100000000 && !this.clear/* || (openNodes.size() > 800000 && bestDepths.size() > 10000000) || bestDepths.size() > 10000000*/) {

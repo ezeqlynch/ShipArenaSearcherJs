@@ -155,8 +155,8 @@ class Engine {
             newState.setParent(node);
             this.addToOpenNodes(newState);
             ok++;
-            if(newState.challengeNumber > 696)
-                console.log(newState.toByteArray().toString(2));
+            // if(newState.challengeNumber > 696)
+            //     console.log(newState.toByteArray().toString(2));
         }
         // if(ok == 0) {
             this.updateBestCosts(node);
@@ -166,8 +166,8 @@ class Engine {
 
 
     updateBestCosts(node){
-        if(node.challengeNumber > 697) 
-            console.log(`${this.bests.length} - ${node.challengeNumber} > ${this.lowestHigh} || (${node.challengeNumber} == ${this.lowestHigh} && ${node.currUlt} >= ${this.lowestHp})`);
+        // if(node.challengeNumber > 697) 
+            // console.log(`${this.bests.length} - ${node.challengeNumber} > ${this.lowestHigh} || (${node.challengeNumber} == ${this.lowestHigh} && ${node.currUlt} >= ${this.lowestHp})`);
         if (this.bests.length < 100) {
             this.bests.push(node);
             this.bests.sort((a, b) => {
